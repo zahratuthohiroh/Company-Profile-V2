@@ -1,0 +1,9 @@
+# Next.js dependencies
+company-profile-v1/node_modules/
+company-profile-v1/.next/
+company-profile-v1/.env*.local
+
+# Laravel dependencies & environment
+company-profile-backend/vendor/
+company-profile-backend/.env
+company-profile-backend/storage/*.key
