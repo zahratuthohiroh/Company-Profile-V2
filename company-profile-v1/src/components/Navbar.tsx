@@ -25,6 +25,9 @@ export default function Navbar() {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
+  const isLoginPage = pathname === '/login';
+  const isSolid = scrolled || isLoginPage;
+
   return (
     <header
       style={{
@@ -34,13 +37,15 @@ export default function Navbar() {
         right: 0,
         zIndex: 1000,
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
-        backgroundColor: scrolled
-          ? 'rgba(44, 26, 14, 0.97)'
-          : 'transparent',
-        boxShadow: scrolled
+        backgroundColor: isLoginPage 
+          ? '#1b4332' // Skema hijau pekat untuk topbar login
+          : scrolled
+            ? 'rgba(44, 26, 14, 0.97)'
+            : 'transparent',
+        boxShadow: isSolid
           ? '0 2px 20px rgba(0,0,0,0.25)'
           : 'none',
-        backdropFilter: scrolled ? 'blur(8px)' : 'none',
+        backdropFilter: isSolid ? 'blur(8px)' : 'none',
       }}
     >
       <div className="container-site" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>

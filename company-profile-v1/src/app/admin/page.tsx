@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,9 +55,13 @@ export default function AdminDashboard() {
       formData.append('_method', 'PUT');
     }
 
+    const token = Cookies.get('admin_token');
     try {
       const res = await fetch(url, {
         method: 'POST', // Selalu gunakan POST untuk upload file multipart/form-data
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData,
       });
 
@@ -72,8 +79,12 @@ export default function AdminDashboard() {
 
   const handleDeleteProduct = async (id: number) => {
     if (!confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
+    const token = Cookies.get('admin_token');
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/layanan/${id}`, { method: 'DELETE' });
+      const res = await fetch(`http://127.0.0.1:8000/api/layanan/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) {
         alert('✓ Produk berhasil dihapus!');
         fetchProducts();
@@ -87,10 +98,14 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!selectedLayananId) return alert('Pilih produk terlebih dahulu!');
 
+    const token = Cookies.get('admin_token');
     try {
       const res = await fetch('http://127.0.0.1:8000/api/sales-history', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
           layanan_id: selectedLayananId,
           year: parseInt(inputYear),
@@ -124,6 +139,22 @@ export default function AdminDashboard() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
+  const handleLogout = async () => {
+    const token = Cookies.get('admin_token');
+    if (token) {
+      try {
+        await fetch('http://127.0.0.1:8000/api/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    Cookies.remove('admin_token');
+    router.push('/login');
+  };
+
   if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Memuat Konsol Admin Pangan...</div>;
 
   return (
@@ -135,6 +166,9 @@ export default function AdminDashboard() {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#52b788', textTransform: 'uppercase', letterSpacing: '1px' }}>CV Cahaya Nusantara</span>
             <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1b4332', margin: '4px 0 0 0' }}>B2B Supply Console & Photo Manager</h1>
           </div>
+          <button onClick={handleLogout} style={{ backgroundColor: '#fee2e2', color: '#991b1b', border: 'none', padding: '10px 20px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer' }}>
+            Keluar (Logout)
+          </button>
         </header>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'start', marginBottom: '40px' }}>
