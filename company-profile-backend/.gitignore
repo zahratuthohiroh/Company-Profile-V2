@@ -17,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+db_company_profile_frfr.sql
+ca.pem

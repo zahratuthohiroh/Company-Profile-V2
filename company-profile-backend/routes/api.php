@@ -17,20 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Endpoint untuk mengambil data layanan dari database via Controller
+// Autentikasi Admin
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+
+// Endpoint Public (Bisa diakses tanpa login)
 Route::get('/layanan', [LayananController::class, 'index']);
-Route::apiResource('commodities', CommodityController::class);
 
-// Rute Layanan / Produk Komoditas
-Route::get('/layanan', [LayananController::class, 'index']);
-Route::post('/layanan', [LayananController::class, 'store']);      
-Route::put('/layanan/{id}', [LayananController::class, 'update']);   
-Route::delete('/layanan/{id}', [LayananController::class, 'destroy']);
+// Endpoint Protected (Hanya bisa diakses admin yang login)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+    
+    Route::apiResource('commodities', CommodityController::class);
 
-// Rute khusus manipulasi data Grafik Tren Tahunan
-Route::post('/sales-history', [SalesHistoryController::class, 'storeOrUpdate']);
+    // Rute Layanan / Produk Komoditas
+    Route::post('/layanan', [LayananController::class, 'store']);      
+    Route::put('/layanan/{id}', [LayananController::class, 'update']);   
+    Route::delete('/layanan/{id}', [LayananController::class, 'destroy']);
 
-// Endpoint bawaan Laravel untuk mengambil data user (bisa dibiarkan saja)
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    // Rute khusus manipulasi data Grafik Tren Tahunan
+    Route::post('/sales-history', [SalesHistoryController::class, 'storeOrUpdate']);
+    
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

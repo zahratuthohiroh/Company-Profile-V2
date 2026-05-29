@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Lora } from 'next/font/google';
+import { Outfit, Playfair_Display } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import './globals.css';
 
-const plusJakarta = Plus_Jakarta_Sans({
+const outfitFont = Outfit({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 });
 
-const lora = Lora({
+const playfairFont = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['400', '700'],
+  weight: ['400', '600', '700'],
   display: 'swap',
 });
 
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${plusJakarta.variable} ${lora.variable}`}>
+    <html lang="id" className={`${outfitFont.variable} ${playfairFont.variable}`}>
       <body>
         <Navbar />
         <main>{children}</main>
