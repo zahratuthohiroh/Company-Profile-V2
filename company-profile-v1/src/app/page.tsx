@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 export const metadata: Metadata = {
   title: 'Beranda',
@@ -37,6 +38,7 @@ const highlights = [
 export default function BerandaPage() {
   return (
     <>
+      <AnalyticsTracker type="website_visit" />
       {/* ======== HERO SECTION ======== */}
       <section
         style={{

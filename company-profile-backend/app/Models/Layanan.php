@@ -9,7 +9,7 @@ class Layanan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_layanan', 'deskripsi', 'gambar'];
+    protected $fillable = ['nama_layanan', 'deskripsi', 'gambar', 'shopee_link'];
 
     // Menambahkan relasi data tahunan
     public function histories()

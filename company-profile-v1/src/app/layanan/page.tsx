@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 async function getLayananFromBackend() {
   try {
     const res = await fetch('http://127.0.0.1:8000/api/layanan', {
-      cache: 'no-store'
+      next: { revalidate: 10 } // Cache hasil API selama 10 detik agar transisi halaman terasa instan
     });
 
     if (!res.ok) return [];
@@ -96,6 +96,7 @@ export default async function LayananPage() {
 
     return {
       id: assets.id,
+      dbId: item.id, // ID asli dari database untuk routing dinamis
       image: finalProductImage, // <--- Sudah disaring aman menggunakan URL Storage asli Laravel
       name: item.nama_layanan, 
       origin: assets.origin,
@@ -113,7 +114,20 @@ export default async function LayananPage() {
     <>
       {/* Hero */}
       <section style={{ backgroundColor: 'var(--color-espresso)', paddingTop: '144px', paddingBottom: 'var(--space-10)', position: 'relative', overflow: 'hidden' }}>
-        <div className="container-site">
+        {/* Background Photo */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url(/hero-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.3
+        }} />
+        {/* Dark overlay */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(135deg, rgba(14,40,24,0.92) 0%, rgba(18,55,32,0.84) 100%)',
+        }} />
+        <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
           <span className="section-label-light">Katalog & Analisis</span>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)' }}>
             Komoditas Pangan & Tren Tahunan
@@ -150,7 +164,6 @@ export default async function LayananPage() {
                 <article key={item.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${item.borderColor}` }}>
                   {/* Image Header */}
                   <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
-                    {/* IMPLEMENTASI BG IMAGE BARU YANG SUDAH SINKRON */}
                     <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                     <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${item.overlayColor} 0%, rgba(0,0,0,0.30) 100%)` }} />
                     <div style={{ position: 'absolute', inset: 0, padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
@@ -163,40 +176,6 @@ export default async function LayananPage() {
                   <div style={{ padding: 'var(--space-4)' }}>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-stone)', lineHeight: 1.75, marginBottom: 'var(--space-3)', minHeight: '70px' }}>{item.desc}</p>
 
-                    {/* ======== VISUALISASI GRAFIK NAIK TURUN TAHUNAN ======== */}
-                    <div style={{ backgroundColor: '#F8F9FA', padding: '12px', borderRadius: '8px', marginBottom: 'var(--space-3)', border: '1px solid #E9ECEF' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--color-stone)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        📈 Tren Distribusi (Tahun ke Tahun)
-                      </span>
-                      
-                      {hasHistory ? (
-                        <div style={{ position: 'relative' }}>
-                          {/* Jalur Line Chart */}
-                          <svg viewBox="0 0 300 80" style={{ width: '100%', height: '60px' }}>
-                            <polyline
-                              fill="none"
-                              stroke={item.color}
-                              strokeWidth="3"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              points={svgPoints}
-                            />
-                          </svg>
-                          {/* Label Tahun & Angka Kuantitas di bawah grafik */}
-                          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', borderTop: '1px dashed #E9ECEF', paddingTop: '4px' }}>
-                            {item.histories.map((h: any, idx: number) => (
-                              <div key={idx} style={{ textAlign: 'center', flex: 1, fontSize: '0.7rem', color: 'var(--color-espresso)' }}>
-                                <span style={{ fontWeight: 'bold', display: 'block' }}>{h.year}</span>
-                                <span style={{ color: item.color, fontWeight: '600' }}>{h.volume_sold}T</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <span style={{ fontSize: '0.8rem', color: '#6C757D', fontStyle: 'italic' }}>Belum ada data historis tahunan.</span>
-                      )}
-                    </div>
-
                     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--space-4)' }}>
                       {item.features.map((f: string) => (
                         <li key={f} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--color-espresso-mid)' }}>
@@ -205,8 +184,11 @@ export default async function LayananPage() {
                       ))}
                     </ul>
 
-                    <Link href="/kontak" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '0.875rem', fontWeight: 600, color: item.color, textDecoration: 'none' }}>
-                      Minta Penawaran Harga →
+                    <Link
+                      href={`/layanan/${item.dbId}`}
+                      style={{ display: 'inline-flex', alignItems: 'center', fontSize: '0.875rem', fontWeight: 600, color: item.color, textDecoration: 'none' }}
+                    >
+                      Lihat Detail Produk →
                     </Link>
                   </div>
                 </article>

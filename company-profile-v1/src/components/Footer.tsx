@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const footerLinks = [
   { href: '/',        label: 'Beranda' },
@@ -10,7 +13,10 @@ const footerLinks = [
 const commodities = ['Petis Udang', 'Bawang Merah', 'Kacang Tanah', 'Ebi (Udang Kering)'];
 
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <footer
@@ -58,15 +64,25 @@ export default function Footer() {
             <p style={{ fontSize: '0.875rem', lineHeight: 1.75, maxWidth: '260px' }}>
               Menjembatani tradisi kuliner Nusantara dengan kebutuhan industri B2B secara profesional dan terpercaya sejak 1998.
             </p>
-            {/* WhatsApp Link */}
-            <div style={{ marginTop: 'var(--space-3)' }}>
+            {/* Social Links */}
+            <div style={{ marginTop: 'var(--space-3)', display: 'flex', gap: '10px' }}>
               <a
                 href="https://wa.me/6281320516633"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-link"
+                title="WhatsApp"
               >
-                WA
+                <img src="/whatsapp-3.svg" alt="WhatsApp" style={{ width: '28px', height: '28px', opacity: 0.7, transition: 'opacity 0.2s ease' }} />
+              </a>
+              <a
+                href="https://shopee.co.id/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link shopee-link"
+                title="Shopee"
+              >
+                <img src="/shopee-logo.svg" alt="Shopee" style={{ width: '28px', height: '28px', opacity: 0.7, transition: 'opacity 0.2s ease' }} />
               </a>
             </div>
           </div>
@@ -145,22 +161,14 @@ export default function Footer() {
       </div>
       <style>{`
         .footer-social-link {
-          width: 36px;
-          height: 36px;
-          border: 1px solid rgba(255,255,255,0.2);
-          border-radius: 4px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.7rem;
-          font-weight: 700;
-          color: rgba(255,255,255,0.6);
-          text-decoration: none;
-          transition: all 0.2s ease;
+          transition: transform 0.2s ease, opacity 0.2s ease;
         }
         .footer-social-link:hover {
-          border-color: var(--color-gold);
-          color: var(--color-gold);
+          transform: translateY(-3px);
+          opacity: 1 !important;
         }
         .footer-nav-link {
           text-decoration: none;

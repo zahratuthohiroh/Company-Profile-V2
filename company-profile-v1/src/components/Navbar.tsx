@@ -25,6 +25,8 @@ export default function Navbar() {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
+  if (pathname.startsWith('/admin')) return null;
+
   const isLoginPage = pathname === '/login';
   const isSolid = scrolled || isLoginPage;
 
@@ -39,13 +41,11 @@ export default function Navbar() {
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
         backgroundColor: isLoginPage 
           ? '#1b4332' // Skema hijau pekat untuk topbar login
-          : scrolled
-            ? 'rgba(44, 26, 14, 0.97)'
-            : 'transparent',
-        boxShadow: isSolid
+          : 'var(--color-forest-dark)', // Warna hijau gelap khas brand Ugi Cahaya Perkasa
+        boxShadow: scrolled
           ? '0 2px 20px rgba(0,0,0,0.25)'
           : 'none',
-        backdropFilter: isSolid ? 'blur(8px)' : 'none',
+        backdropFilter: 'none',
       }}
     >
       <div className="container-site" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>

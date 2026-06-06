@@ -14,17 +14,26 @@ class LayananController extends Controller
         return response()->json(Layanan::with('histories')->get());
     }
 
+    public function show($id)
+    {
+        $layanan = Layanan::with('histories')->find($id);
+        if (!$layanan) {
+            return response()->json(['message' => 'Produk tidak ditemukan'], 404);
+        }
+        return response()->json($layanan);
+    }
+
     // 1. TAMBAH PRODUK + GAMBAR
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama_layanan' => 'required|string|max:255',
             'deskripsi'    => 'required|string',
-            'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // max 2MB
+            'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'shopee_link'  => 'nullable|url',
         ]);
 
         if ($request->hasFile('gambar')) {
-            // Menyimpan ke folder storage/app/public/komoditas
             $path = $request->file('gambar')->store('komoditas', 'public');
             $validated['gambar'] = $path;
         }
@@ -45,14 +54,13 @@ class LayananController extends Controller
             'nama_layanan' => 'sometimes|string|max:255',
             'deskripsi'    => 'sometimes|string',
             'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'shopee_link'  => 'nullable|url',
         ]);
 
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
             if ($layanan->gambar) {
                 Storage::disk('public')->delete($layanan->gambar);
             }
-            // Simpan gambar baru
             $path = $request->file('gambar')->store('komoditas', 'public');
             $validated['gambar'] = $path;
         }
