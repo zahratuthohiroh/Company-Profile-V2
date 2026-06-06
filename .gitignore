@@ -7,3 +7,4 @@ company-profile-v1/.env*.local
 company-profile-backend/vendor/
 company-profile-backend/.env
 company-profile-backend/storage/*.key
+/personal/

@@ -3,6 +3,8 @@
 use App\Http\Controllers\API\LayananController;
 use App\Http\Controllers\API\CommodityController;
 use App\Http\Controllers\API\SalesHistoryController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AnalyticController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,25 +19,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Autentikasi Admin
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+// Auth Routes
+Route::post('/login', [AuthController::class, 'login']);
 
-// Endpoint Public (Bisa diakses tanpa login)
+// Public Routes (Layanan)
 Route::get('/layanan', [LayananController::class, 'index']);
+Route::get('/layanan/{id}', [LayananController::class, 'show']);
 
-// Endpoint Protected (Hanya bisa diakses admin yang login)
+// Public Routes (Analytics tracking)
+Route::post('/analytics', [AnalyticController::class, 'store']);
+
+// Protected Admin Routes
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
     
     Route::apiResource('commodities', CommodityController::class);
 
-    // Rute Layanan / Produk Komoditas
-    Route::post('/layanan', [LayananController::class, 'store']);      
-    Route::put('/layanan/{id}', [LayananController::class, 'update']);   
+    // Manajemen Layanan
+    Route::post('/layanan', [LayananController::class, 'store']);
+    Route::put('/layanan/{id}', [LayananController::class, 'update']);
     Route::delete('/layanan/{id}', [LayananController::class, 'destroy']);
-
-    // Rute khusus manipulasi data Grafik Tren Tahunan
+    
+    // Manajemen Histori Penjualan
     Route::post('/sales-history', [SalesHistoryController::class, 'storeOrUpdate']);
+    
+    // Statistik Analitik
+    Route::get('/analytics/stats', [AnalyticController::class, 'stats']);
     
     Route::get('/user', function (Request $request) {
         return $request->user();
