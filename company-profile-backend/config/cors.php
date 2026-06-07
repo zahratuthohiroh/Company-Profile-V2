@@ -20,7 +20,9 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        env('FRONTEND_URL', 'http://localhost:3000'),
+        'https://www.ugicahayamentari.web.id',
+        'https://ugicahayamentari.web.id',
+        'http://localhost:3000',
         'http://127.0.0.1:3000'
     ],
 
