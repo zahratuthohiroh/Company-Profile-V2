@@ -27,7 +27,7 @@ Route::get('/layanan', [LayananController::class, 'index']);
 Route::get('/layanan/{id}', [LayananController::class, 'show']);
 
 // Public Routes (Analytics tracking)
-Route::post('/analytics', [AnalyticController::class, 'store']);
+Route::middleware('throttle:60,1')->post('/analytics', [AnalyticController::class, 'store']);
 
 // Protected Admin Routes
 Route::middleware('auth:sanctum')->group(function () {
