@@ -14,7 +14,8 @@ export default function AnalyticsTracker({ type, layanan_id }: AnalyticsProps) {
     if (tracked.current) return;
     tracked.current = true;
 
-    fetch('http://127.0.0.1:8000/api/analytics', {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    fetch(`${API_BASE}/api/analytics`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, layanan_id })

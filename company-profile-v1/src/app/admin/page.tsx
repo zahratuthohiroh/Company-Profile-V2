@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useState<'manajemen' | 'input' | 'grafik' | 'analitik'>('manajemen');
   const [products, setProducts] = useState<any[]>([]);
@@ -28,7 +29,7 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/layanan', { cache: 'no-store' });
+      const res = await fetch(`${API_BASE}/api/layanan`, { cache: 'no-store' });
       const data = await res.json();
       setProducts(data);
     } catch (error) {
@@ -40,7 +41,7 @@ export default function AdminDashboard() {
     const token = Cookies.get('admin_token');
     if (!token) return;
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/analytics/stats', {
+      const res = await fetch(`${API_BASE}/api/analytics/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -72,9 +73,9 @@ export default function AdminDashboard() {
       formData.append('shopee_link', shopeeLink);
     }
 
-    let url = 'http://127.0.0.1:8000/api/layanan';
+    let url = `${API_BASE}/api/layanan`;
     if (productId) {
-      url = `http://127.0.0.1:8000/api/layanan/${productId}`;
+      url = `${API_BASE}/api/layanan/${productId}`;
       formData.append('_method', 'PUT');
     }
 
@@ -105,7 +106,7 @@ export default function AdminDashboard() {
     if (!confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?')) return;
     const token = Cookies.get('admin_token');
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/layanan/${id}`, { 
+      const res = await fetch(`${API_BASE}/api/layanan/${id}`, { 
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -124,7 +125,7 @@ export default function AdminDashboard() {
 
     const token = Cookies.get('admin_token');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/sales-history', {
+      const res = await fetch(`${API_BASE}/api/sales-history`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -171,7 +172,7 @@ export default function AdminDashboard() {
     const token = Cookies.get('admin_token');
     if (token) {
       try {
-        await fetch('http://127.0.0.1:8000/api/logout', {
+        await fetch(`${API_BASE}/api/logout`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -309,7 +310,7 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             {item.gambar ? (
                               <img 
-                                src={`http://127.0.0.1:8000/storage/${item.gambar}`} 
+                                src={`${API_BASE}/storage/${item.gambar}`} 
                                 alt={item.nama_layanan} 
                                 className="h-12 w-16 object-cover rounded-md shadow-sm border border-slate-200"
                               />

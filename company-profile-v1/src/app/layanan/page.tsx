@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 
 async function getLayananFromBackend() {
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/layanan', {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    const res = await fetch(`${API_BASE}/api/layanan`, {
       next: { revalidate: 10 } // Cache hasil API selama 10 detik agar transisi halaman terasa instan
     });
 
@@ -90,7 +91,8 @@ export default async function LayananPage() {
       if (item.gambar.startsWith('http')) {
         finalProductImage = item.gambar;
       } else if (item.gambar.startsWith('komoditas')) {
-        finalProductImage = `http://127.0.0.1:8000/storage/${item.gambar}`;
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+        finalProductImage = `${API_BASE}/storage/${item.gambar}`;
       }
     }
 
