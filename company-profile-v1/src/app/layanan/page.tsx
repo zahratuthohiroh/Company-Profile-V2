@@ -10,7 +10,7 @@ async function getLayananFromBackend() {
   try {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
     const res = await fetch(`${API_BASE}/api/layanan`, {
-      next: { revalidate: 10 } // Cache hasil API selama 10 detik agar transisi halaman terasa instan
+      next: { revalidate: 3600 } // Cache hasil API selama 1 jam untuk performa optimal
     });
 
     if (!res.ok) return [];

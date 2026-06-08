@@ -1,5 +1,8 @@
 'use client';
 
+import React from 'react';
+import Image from 'next/image';
+
 type ShopeeButtonProps = {
   href?: string;
   hasShopeeLink: boolean;
@@ -43,7 +46,7 @@ export default function ShopeeButton({ href, hasShopeeLink, layananId }: ShopeeB
         marginBottom: 'var(--space-3)',
       }}
     >
-      <img src="/shopee-logo.svg" alt="Shopee" style={{ width: '20px', height: '20px', filter: hasShopeeLink ? 'brightness(0) invert(1)' : 'grayscale(100%) opacity(50%)' }} />
+      <Image src="/shopee-logo.svg" alt="Shopee" width={20} height={20} style={{ filter: hasShopeeLink ? 'brightness(0) invert(1)' : 'grayscale(100%) opacity(50%)' }} />
       {hasShopeeLink ? 'Beli di Shopee' : 'Belum Tersedia'}
     </a>
   );

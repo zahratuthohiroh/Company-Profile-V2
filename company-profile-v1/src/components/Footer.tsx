@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const footerLinks = [
@@ -41,9 +42,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div style={{ gridColumn: 'span 1' }}>
             <div style={{ marginBottom: 'var(--space-4)' }}>
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Ugi Cahaya Mentari" 
+                width={200}
+                height={60}
                 style={{ height: '56px', width: 'auto', objectFit: 'contain' }} 
               />
             </div>
@@ -59,16 +62,16 @@ export default function Footer() {
                 className="footer-social-link"
                 title="WhatsApp"
               >
-                <img src="/whatsapp-3.svg" alt="WhatsApp" style={{ width: '28px', height: '28px', opacity: 0.7, transition: 'opacity 0.2s ease' }} />
+                <Image src="/whatsapp-3.svg" alt="WhatsApp" width={28} height={28} style={{ opacity: 0.7, transition: 'opacity 0.2s ease' }} />
               </a>
               <a
-                href="https://shopee.co.id/"
+                href="https://shopee.co.id/myanryan._"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-link shopee-link"
                 title="Shopee"
               >
-                <img src="/shopee-logo.svg" alt="Shopee" style={{ width: '28px', height: '28px', opacity: 0.7, transition: 'opacity 0.2s ease' }} />
+                <Image src="/shopee-logo.svg" alt="Shopee" width={28} height={28} style={{ opacity: 0.7, transition: 'opacity 0.2s ease' }} />
               </a>
             </div>
           </div>

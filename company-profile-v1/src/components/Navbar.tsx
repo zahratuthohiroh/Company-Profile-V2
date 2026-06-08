@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
@@ -52,9 +53,11 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img 
+          <Image 
             src="/logo.png" 
             alt="Ugi Cahaya Mentari" 
+            width={180}
+            height={60}
             style={{ height: '44px', width: 'auto', objectFit: 'contain' }} 
           />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
