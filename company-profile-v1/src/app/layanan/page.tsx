@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Layanan & Komoditas',
@@ -117,22 +118,25 @@ export default async function LayananPage() {
       {/* Hero */}
       <section style={{ backgroundColor: 'var(--color-espresso)', paddingTop: '144px', paddingBottom: 'var(--space-10)', position: 'relative', overflow: 'hidden' }}>
         {/* Background Photo */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'url(/hero-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.3
-        }} />
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
+          <Image
+            src="/hero-bg.png"
+            alt="Layanan Ugi Cahaya Mentari"
+            fill
+            quality={85}
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
         {/* Dark overlay */}
         <div aria-hidden="true" style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(135deg, rgba(14,40,24,0.92) 0%, rgba(18,55,32,0.84) 100%)',
         }} />
         <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
-          <span className="section-label-light">Katalog & Analisis</span>
-          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)' }}>
-            Komoditas Pangan & Tren Tahunan
+          <span className="section-label-light animate-fade-in-up">Informasi Produk</span>
+          <h1 className="animate-fade-in-up-delay-1" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)' }}>
+            Katalog Komoditas & Analisis Pasar
           </h1>
         </div>
       </section>
@@ -140,7 +144,7 @@ export default async function LayananPage() {
       {/* ======== COMMODITY GRID WITH TREND CHART ======== */}
       <section className="section-pad" style={{ backgroundColor: 'var(--color-cream)' }}>
         <div className="container-site">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
+          <div className="animate-fade-in-up-delay-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
             {commodities.map((item: any) => {
               
               // LOGIK GENERATOR GRAFIK GARIS NAIK TURUN (SVG)

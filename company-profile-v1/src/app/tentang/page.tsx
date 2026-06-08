@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Tentang Kami',
@@ -42,12 +43,16 @@ export default function TentangPage() {
         }}
       >
         {/* Background Photo */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'url(/about-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }} />
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/about-bg.png"
+            alt="Tentang Ugi Cahaya Mentari"
+            fill
+            quality={85}
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
         {/* Dark overlay */}
         <div aria-hidden="true" style={{
           position: 'absolute', inset: 0,
@@ -58,12 +63,12 @@ export default function TentangPage() {
           backgroundImage: 'radial-gradient(circle at 70% 50%, rgba(27,107,58,0.22) 0%, transparent 60%)',
         }} />
         <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
-          <span className="section-label-light">Profil Perusahaan</span>
-          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)', maxWidth: '640px' }}>
+          <span className="section-label-light animate-fade-in-up">Profil Perusahaan</span>
+          <h1 className="animate-fade-in-up-delay-1" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)', maxWidth: '640px' }}>
             Tentang Ugi Cahaya Mentari
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.0625rem', maxWidth: '560px', lineHeight: 1.8 }}>
-            Lebih dari dua dekade menjadi jembatan antara tradisi pangan lokal Cirebon dengan kebutuhan industri B2B modern di seluruh Jawa Barat.
+          <p className="animate-fade-in-up-delay-2" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.0625rem', maxWidth: '560px', lineHeight: 1.8 }}>
+            Berpengalaman lebih dari 20 tahun memasok komoditas pangan Cirebon untuk memenuhi skala dan standar industri modern.
           </p>
 
           {/* Hero Stats Strip */}
@@ -107,14 +112,19 @@ export default function TentangPage() {
             {/* Photo Side */}
             <div style={{ position: 'relative' }}>
               <div style={{
+                position: 'relative',
                 borderRadius: '10px',
                 overflow: 'hidden',
                 height: '380px',
-                backgroundImage: 'url(/about-history.png)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
                 boxShadow: '0 20px 60px rgba(18,50,30,0.18)',
-              }} />
+              }}>
+                <Image
+                  src="/about-history.png"
+                  alt="Sejarah Ugi Cahaya Mentari"
+                  fill
+                  style={{ objectFit: 'cover', objectPosition: 'center' }}
+                />
+              </div>
               {/* Floating badge */}
               <div style={{
                 position: 'absolute',
@@ -140,7 +150,7 @@ export default function TentangPage() {
                 Berawal dari Pasar Tradisional Cirebon
               </h2>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, marginBottom: 'var(--space-3)', fontSize: '0.9375rem' }}>
-                Perjalanan kami dimulai pada 1998, ketika Bapak H. Suryana mendirikan usaha distribusi kecil di kawasan Pasar Pagi Cirebon. Dengan kejujuran dan ketekunan, kami perlahan membangun kepercayaan para produsen lokal dan pelaku industri kuliner.
+                Ugi Cahaya Mentari bermula pada tahun 1998 sebagai usaha distribusi di Pasar Pagi Cirebon yang didirikan oleh Bapak H. Suryana. Seiring waktu, kami terus menjaga komitmen mutu hingga dipercaya oleh berbagai pelaku industri.
               </p>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, fontSize: '0.9375rem', marginBottom: 'var(--space-5)' }}>
                 Hari ini, Ugi Cahaya Mentari telah berkembang menjadi distributor B2B terpercaya dengan jaringan lebih dari 200 mitra aktif, melayani restoran, pabrik bumbu, hotel, dan retail modern di seluruh Jawa Barat.
@@ -328,7 +338,7 @@ export default function TentangPage() {
           <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
             <span className="section-label">Nilai Perusahaan</span>
             <div className="divider-terracotta" style={{ margin: '0 auto var(--space-3)' }} />
-            <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>Fondasi yang Memandu Langkah Kami</h2>
+            <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>Prinsip Kerja Kami</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
             {values.map((v, i) => (
@@ -394,14 +404,19 @@ export default function TentangPage() {
 
             {/* Illustration */}
             <div style={{
+              position: 'relative',
               borderRadius: '10px',
               overflow: 'hidden',
               height: '260px',
-              backgroundImage: 'url(/about-team.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
               boxShadow: '0 12px 40px rgba(18,50,30,0.14)',
-            }} />
+            }}>
+              <Image
+                src="/about-team.png"
+                alt="Tim Ugi Cahaya Mentari"
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
+              />
+            </div>
           </div>
         </div>
       </section>

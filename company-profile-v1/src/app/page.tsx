@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Beranda',
@@ -19,19 +20,19 @@ const highlights = [
     image: '/illus-kualitas.png',
     accentColor: '#2D6A4F',
     title: 'Kualitas Terjamin',
-    desc: 'Setiap komoditas melalui proses seleksi ketat dan quality control berlapis sebelum didistribusikan.',
+    desc: 'Kami menyortir setiap komoditas secara langsung untuk memastikan standar mutu yang konsisten sebelum pengiriman.',
   },
   {
     image: '/illus-pengiriman.png',
     accentColor: '#1A5C5C',
     title: 'Distribusi Tepat Waktu',
-    desc: 'Armada pengiriman kami memastikan komoditas sampai ke mitra bisnis dalam kondisi prima dan tepat jadwal.',
+    desc: 'Kami menjamin jadwal pengiriman yang rutin dan aman untuk menjaga kelancaran produksi bisnis Anda.',
   },
   {
     image: '/illus-kemitraan.png',
     accentColor: '#5A7A2E',
     title: 'Kemitraan Jangka Panjang',
-    desc: 'Kami membangun relasi bisnis yang saling menguntungkan dengan produsen lokal dan mitra industri B2B.',
+    desc: 'Kami berfokus pada kolaborasi jangka panjang, baik dengan petani lokal maupun pelanggan industri kami.',
   },
 ];
 
@@ -56,11 +57,17 @@ export default function BerandaPage() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: 'url(/hero-bg.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
           }}
-        />
+        >
+          <Image
+            src="/hero-bg.png"
+            alt="Hero Background"
+            fill
+            quality={85}
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
         {/* Dark overlay */}
         <div
           aria-hidden="true"
@@ -135,8 +142,8 @@ export default function BerandaPage() {
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
               gap: 'var(--space-1)',
-              marginTop: 'var(--space-12)',
-              paddingTop: 'var(--space-6)',
+              marginTop: 'var(--space-8)',
+              paddingTop: 'var(--space-4)',
               borderTop: '1px solid rgba(255,255,255,0.12)',
             }}
           >
@@ -172,7 +179,7 @@ export default function BerandaPage() {
               Komitmen Kami untuk Kualitas & Kepercayaan
             </h2>
             <p style={{ color: 'var(--color-stone)', fontSize: '1rem', maxWidth: '520px', margin: '0 auto' }}>
-              Selama lebih dari dua dekade, kami telah menjadi tulang punggung distribusi pangan tradisional untuk ratusan mitra industri di seluruh Jawa Barat.
+              Selama lebih dari 20 tahun, kami dipercaya sebagai pemasok utama komoditas pangan untuk ratusan mitra industri di seluruh Jawa Barat.
             </p>
           </div>
 
