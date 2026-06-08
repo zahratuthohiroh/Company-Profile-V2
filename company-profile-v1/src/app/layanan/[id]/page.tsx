@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import Image from 'next/image';
 import ShopeeButton from '@/components/ShopeeButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
@@ -62,15 +63,16 @@ export default async function DetailLayananPage({ params }: { params: Promise<{ 
           overflow: 'hidden',
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.35 }}>
+          <Image
+            src={imageUrl}
+            alt={layanan.nama_layanan}
+            fill
+            quality={85}
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
         <div
           style={{
             position: 'absolute',
@@ -100,6 +102,7 @@ export default async function DetailLayananPage({ params }: { params: Promise<{ 
       <section className="section-pad" style={{ backgroundColor: 'var(--color-cream)' }}>
         <div className="container-site">
           <div
+            className="detail-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '2fr 1fr',

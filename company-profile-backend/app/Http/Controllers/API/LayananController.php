@@ -7,12 +7,16 @@ use App\Models\Layanan;
 use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class LayananController extends Controller
 {
     public function index()
     {
-        return response()->json(Layanan::with('histories')->get());
+        $layanans = Cache::remember('layanan_all', 3600, function () {
+            return Layanan::all();
+        });
+        return response()->json($layanans);
     }
 
     public function show($id)
@@ -42,6 +46,7 @@ class LayananController extends Controller
         $layanan = Layanan::create($validated);
         
         AuditLog::logAction('CREATED', 'Layanan', ['id' => $layanan->id, 'nama_layanan' => $layanan->nama_layanan]);
+        Cache::forget('layanan_all');
 
         return response()->json(['message' => 'Produk berhasil ditambahkan!', 'data' => $layanan], 201);
     }
@@ -72,6 +77,7 @@ class LayananController extends Controller
         $layanan->update($validated);
 
         AuditLog::logAction('UPDATED', 'Layanan', ['id' => $layanan->id, 'nama_layanan' => $layanan->nama_layanan]);
+        Cache::forget('layanan_all');
 
         return response()->json(['message' => 'Produk berhasil diperbarui!', 'data' => $layanan], 200);
     }
@@ -88,6 +94,7 @@ class LayananController extends Controller
         }
 
         AuditLog::logAction('DELETED', 'Layanan', ['id' => $id, 'nama_layanan' => $layananName]);
+        Cache::forget('layanan_all');
 
         return response()->json(['message' => 'Produk berhasil dihapus!']);
     }

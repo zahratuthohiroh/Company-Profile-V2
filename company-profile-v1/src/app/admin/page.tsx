@@ -1,8 +1,18 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+
+const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), { ssr: false });
+const Line = dynamic(() => import('recharts').then(mod => mod.Line), { ssr: false });
+const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
+const RechartsTooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
+const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
 
 export default function AdminDashboard() {
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
@@ -395,9 +405,11 @@ export default function AdminDashboard() {
                         <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap">
                             {item.gambar ? (
-                              <img 
+                              <Image 
                                 src={`${API_BASE}/storage/${item.gambar}`} 
                                 alt={item.nama_layanan} 
+                                width={64}
+                                height={48}
                                 className="h-12 w-16 object-cover rounded-md shadow-sm border border-slate-200"
                               />
                             ) : (

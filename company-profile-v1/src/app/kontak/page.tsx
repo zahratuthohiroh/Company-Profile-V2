@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Kontak',
@@ -44,12 +45,16 @@ export default function KontakPage() {
         }}
       >
         {/* Background Photo */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'url(/contact-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }} />
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/contact-bg.png"
+            alt="Kontak Ugi Cahaya Mentari"
+            fill
+            quality={85}
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
         {/* Dark overlay */}
         <div aria-hidden="true" style={{
           position: 'absolute', inset: 0,
@@ -65,8 +70,9 @@ export default function KontakPage() {
           }}
         />
         <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
-          <span className="section-label-light">Hubungi Kami</span>
+          <span className="section-label-light animate-fade-in-up">Hubungi Kami</span>
           <h1
+            className="animate-fade-in-up-delay-1"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               color: 'white',
@@ -74,9 +80,10 @@ export default function KontakPage() {
               maxWidth: '560px',
             }}
           >
-            Mari Mulai Kerjasama Bisnis Anda
+            Diskusikan Kebutuhan Bisnis Anda
           </h1>
           <p
+            className="animate-fade-in-up-delay-2"
             style={{
               color: 'rgba(255,255,255,0.65)',
               fontSize: '1.0625rem',
@@ -84,7 +91,7 @@ export default function KontakPage() {
               lineHeight: 1.75,
             }}
           >
-            Tim sales kami siap membantu mendapatkan informasi harga, ketersediaan stok, dan skema kemitraan yang sesuai dengan kebutuhan bisnis Anda.
+            Hubungi tim kami untuk mendapatkan penawaran harga grosir terbaru, info stok komoditas, atau mendiskusikan peluang kerja sama.
           </p>
         </div>
       </section>
@@ -92,19 +99,20 @@ export default function KontakPage() {
       {/* ======== CONTACT INFO GRID ======== */}
       <section className="section-pad" style={{ backgroundColor: 'var(--color-cream)' }}>
         <div className="container-site">
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
+          <div className="animate-fade-in-up-delay-1" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
             <span className="section-label">Informasi Kontak</span>
             <div className="divider-terracotta" style={{ margin: '0 auto var(--space-3)' }} />
             <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', marginBottom: 'var(--space-2)' }}>
-              Semua Cara untuk Menghubungi Kami
+              Pilihan Kontak
             </h2>
             <p style={{ color: 'var(--color-stone)', fontSize: '1rem', maxWidth: '480px', margin: '0 auto' }}>
-              Pilih metode komunikasi yang paling nyaman bagi Anda. Kami siap merespons dalam 1×24 jam pada hari kerja.
+              Silakan hubungi kami melalui salah satu kontak di bawah ini. Tim kami akan merespons pertanyaan Anda pada jam kerja.
             </p>
           </div>
 
           {/* Contact Cards Grid */}
           <div
+            className="animate-fade-in-up-delay-2"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',

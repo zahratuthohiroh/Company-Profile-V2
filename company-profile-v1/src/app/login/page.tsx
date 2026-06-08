@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -43,14 +44,16 @@ export default function LoginPage() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
       {/* Background Image dari Landing Page */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'url(/hero-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: -2,
-      }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: -2 }}>
+        <Image
+          src="/hero-bg.png"
+          alt="Login Background"
+          fill
+          quality={85}
+          priority
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </div>
       {/* Overlay Gradien Elegan */}
       <div style={{
         position: 'absolute',
