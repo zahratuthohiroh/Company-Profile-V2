@@ -3,42 +3,32 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Kontak',
-  description: 'Hubungi CV Cahaya Nusantara untuk informasi harga, ketersediaan stok komoditas pangan, dan kemitraan B2B di Cirebon.',
+  description: 'Hubungi Ugi Cahaya Mentari untuk informasi harga, ketersediaan stok komoditas pangan, dan kemitraan B2B di Cirebon.',
 };
 
 const contactCards = [
   {
-    icon: '📍',
     label: 'Alamat Kantor',
     lines: ['Jl. Bojong Kaler No. 51 RT 03 RW 12,', 'Cigadung, Cibeunying Kaler'],
     cta: { label: 'Lihat di Google Maps', href: 'https://maps.google.com/?q=Jl+Bojong+Kaler+No+51+Cigadung+Cibeunying+Kaler', external: true },
   },
   {
-    icon: '📞',
     label: 'Telepon',
     lines: ['+62 813-2051-6633'],
     cta: { label: 'Hubungi Sekarang', href: 'tel:+6281320516633', external: false },
   },
   {
-    icon: '💬',
     label: 'WhatsApp',
     lines: ['+62 813-2051-6633'],
-    cta: { label: 'Chat WhatsApp', href: 'https://wa.me/6281320516633', external: true },
+    cta: { label: 'Chat WhatsApp', href: 'https://wa.me/6281320516633?text=Halo%2C%20saya%20tertarik%20untuk%20mengetahui%20lebih%20lanjut%20mengenai%20produk%20anda.', external: true },
   },
   {
-    icon: '🕐',
     label: 'Jam Operasional',
     lines: ['Senin – Jumat: 08.00 – 17.00 WIB', 'Sabtu: 08.00 – 13.00 WIB'],
     cta: null,
   },
 ];
 
-const commoditiesCta = [
-  { emoji: '🦐', name: 'Petis Udang' },
-  { emoji: '🧅', name: 'Bawang Merah' },
-  { emoji: '🥜', name: 'Kacang Tanah' },
-  { emoji: '🌊', name: 'Ebi (Udang Kering)' },
-];
 
 export default function KontakPage() {
   return (
@@ -132,23 +122,8 @@ export default function KontakPage() {
                   gap: 'var(--space-2)',
                 }}
               >
-                {/* Icon + Label */}
+                {/* Label */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                  <div
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      backgroundColor: '#EEF7F2',
-                      borderRadius: '8px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.375rem',
-                      flexShrink: 0,
-                    }}
-                  >
-                    {card.icon}
-                  </div>
                   <span
                     style={{
                       fontSize: '0.75rem',
@@ -192,7 +167,7 @@ export default function KontakPage() {
                       transition: 'color 0.2s, border-color 0.2s',
                     }}
                   >
-                    {card.cta.label} →
+                    {card.cta.label}
                   </a>
                 )}
               </div>
@@ -201,91 +176,7 @@ export default function KontakPage() {
         </div>
       </section>
 
-      {/* ======== KOMODITAS CTA STRIP ======== */}
-      <section className="section-pad" style={{ backgroundColor: 'var(--color-cream-dark)' }}>
-        <div className="container-site">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 'var(--space-8)',
-              alignItems: 'center',
-            }}
-          >
-            {/* Text */}
-            <div>
-              <span className="section-label">Mulai Sekarang</span>
-              <div className="divider-terracotta" />
-              <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.125rem)', marginBottom: 'var(--space-3)' }}>
-                Butuh Komoditas dalam Jumlah Besar?
-              </h2>
-              <p style={{ color: 'var(--color-stone)', lineHeight: 1.8, marginBottom: 'var(--space-5)', fontSize: '0.9375rem' }}>
-                Kami menyediakan empat komoditas unggulan untuk kebutuhan industri B2B Anda. Hubungi tim sales kami via WhatsApp untuk mendapatkan penawaran harga grosir terbaik.
-              </p>
-              <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-                <a href="https://wa.me/6281320516633" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                  Chat WhatsApp →
-                </a>
-              </div>
-            </div>
 
-            {/* Commodity Tags */}
-            <div
-              style={{
-                backgroundColor: 'var(--color-espresso)',
-                borderRadius: '8px',
-                padding: 'var(--space-6)',
-              }}
-            >
-              <p
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-gold-light)',
-                  marginBottom: 'var(--space-4)',
-                }}
-              >
-                Komoditas Tersedia
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                {commoditiesCta.map((c) => (
-                  <div
-                    key={c.name}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 'var(--space-2)',
-                      padding: 'var(--space-2) var(--space-3)',
-                      backgroundColor: 'rgba(255,255,255,0.05)',
-                      borderRadius: '6px',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                    }}
-                  >
-                    <span style={{ fontSize: '1.375rem' }}>{c.emoji}</span>
-                    <span style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>
-                      {c.name}
-                    </span>
-                    <Link
-                      href="/layanan"
-                      style={{
-                        marginLeft: 'auto',
-                        fontSize: '0.75rem',
-                        color: 'var(--color-gold-light)',
-                        textDecoration: 'none',
-                        fontWeight: 600,
-                      }}
-                    >
-                      Detail →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

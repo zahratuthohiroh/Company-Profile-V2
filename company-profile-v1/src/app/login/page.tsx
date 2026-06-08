@@ -78,7 +78,7 @@ export default function LoginPage() {
             Portal Admin
           </h1>
           <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.8)', fontWeight: 300, margin: 0 }}>
-            Manajemen Internal Cahaya Nusantara
+            Manajemen Internal Ugi Cahaya Mentari
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 fontSize: '1rem', color: 'white', outline: 'none',
                 transition: 'all 0.3s ease'
               }} 
-              placeholder="admin@cahya.com"
+              placeholder="Masukkan Username Anda"
             />
           </div>
           <div>
@@ -114,7 +114,7 @@ export default function LoginPage() {
                 fontSize: '1rem', color: 'white', outline: 'none',
                 transition: 'all 0.3s ease'
               }} 
-              placeholder="••••••••"
+              placeholder="Masukkan Password Anda"
             />
           </div>
           <button 

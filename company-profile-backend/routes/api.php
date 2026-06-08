@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CommodityController;
 use App\Http\Controllers\API\SalesHistoryController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AnalyticController;
+use App\Http\Controllers\API\AuditLogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Statistik Analitik
     Route::get('/analytics/stats', [AnalyticController::class, 'stats']);
+
+    // Audit Logs
+    Route::get('/audit-logs', [AuditLogController::class, 'index']);
     
     Route::get('/user', function (Request $request) {
         return $request->user();

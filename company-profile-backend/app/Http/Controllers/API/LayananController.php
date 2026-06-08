@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Routing\Controller;
 use App\Models\Layanan;
+use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,6 +40,9 @@ class LayananController extends Controller
         }
 
         $layanan = Layanan::create($validated);
+        
+        AuditLog::logAction('CREATED', 'Layanan', ['id' => $layanan->id, 'nama_layanan' => $layanan->nama_layanan]);
+
         return response()->json(['message' => 'Produk berhasil ditambahkan!', 'data' => $layanan], 201);
     }
 
@@ -66,6 +70,9 @@ class LayananController extends Controller
         }
 
         $layanan->update($validated);
+
+        AuditLog::logAction('UPDATED', 'Layanan', ['id' => $layanan->id, 'nama_layanan' => $layanan->nama_layanan]);
+
         return response()->json(['message' => 'Produk berhasil diperbarui!', 'data' => $layanan], 200);
     }
 
@@ -75,7 +82,13 @@ class LayananController extends Controller
         if ($layanan && $layanan->gambar) {
             Storage::disk('public')->delete($layanan->gambar);
         }
-        $layanan->delete();
+        $layananName = $layanan ? $layanan->nama_layanan : 'Unknown';
+        if ($layanan) {
+            $layanan->delete();
+        }
+
+        AuditLog::logAction('DELETED', 'Layanan', ['id' => $id, 'nama_layanan' => $layananName]);
+
         return response()->json(['message' => 'Produk berhasil dihapus!']);
     }
 }

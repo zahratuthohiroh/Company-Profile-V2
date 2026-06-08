@@ -25,7 +25,7 @@ export default function Navbar() {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
-  if (pathname.startsWith('/admin')) return null;
+  if (pathname.startsWith('/admin') || pathname === '/login') return null;
 
   const isLoginPage = pathname === '/login';
   const isSolid = scrolled || isLoginPage;
@@ -41,7 +41,7 @@ export default function Navbar() {
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
         backgroundColor: isLoginPage 
           ? '#1b4332' // Skema hijau pekat untuk topbar login
-          : 'var(--color-forest-dark)', // Warna hijau gelap khas brand Ugi Cahaya Perkasa
+          : 'var(--color-forest-dark)', // Warna hijau gelap khas brand Ugi Cahaya Mentari
         boxShadow: scrolled
           ? '0 2px 20px rgba(0,0,0,0.25)'
           : 'none',
@@ -51,25 +51,33 @@ export default function Navbar() {
       <div className="container-site" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
 
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          <span style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.25rem',
-            fontWeight: 700,
-            color: 'white',
-            lineHeight: 1,
-          }}>
-            Ugi Cahaya Perkasa
-          </span>
-          <span style={{
-            fontSize: '0.65rem',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-gold-light)',
-            fontWeight: 600,
-          }}>
-            Distributor Pangan Cirebon
-          </span>
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img 
+            src="/logo.png" 
+            alt="Ugi Cahaya Mentari" 
+            style={{ height: '44px', width: 'auto', objectFit: 'contain' }} 
+          />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            <span style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: 'white',
+              lineHeight: 1,
+              letterSpacing: '0.02em',
+            }}>
+              Ugi Cahaya Mentari
+            </span>
+            <span style={{
+              fontSize: '0.6rem',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: 'var(--color-gold-light)',
+              fontWeight: 600,
+            }}>
+              Distributor Pangan Cirebon
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}

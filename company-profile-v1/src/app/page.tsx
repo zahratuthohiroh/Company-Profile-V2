@@ -4,7 +4,7 @@ import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 export const metadata: Metadata = {
   title: 'Beranda',
-  description: 'Ugi Cahaya Perkasa — Distributor B2B komoditas pangan tradisional Cirebon terpercaya sejak 1998.',
+  description: 'Ugi Cahaya Mentari — Distributor B2B komoditas pangan tradisional Cirebon terpercaya sejak 1998.',
 };
 
 const stats = [
@@ -113,7 +113,7 @@ export default function BerandaPage() {
                 maxWidth: '580px',
               }}
             >
-              Ugi Cahaya Perkasa adalah mitra distribusi B2B terpercaya untuk komoditas pangan tradisional pilihan — petis udang, bawang merah, kacang tanah, dan ebi — langsung dari sumber terbaik Cirebon.
+              Ugi Cahaya Mentari adalah mitra distribusi B2B terpercaya untuk komoditas pangan tradisional pilihan — petis udang, bawang merah, kacang tanah, dan ebi — langsung dari sumber terbaik Cirebon.
             </p>
 
             <div
@@ -166,7 +166,7 @@ export default function BerandaPage() {
         <div className="container-site">
           {/* Section Header */}
           <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-            <span className="section-label">Mengapa Cahaya Nusantara?</span>
+            <span className="section-label">Mengapa Ugi Cahaya Mentari?</span>
             <div className="divider-terracotta" style={{ margin: '0 auto var(--space-3)' }} />
             <h2 style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', marginBottom: 'var(--space-2)' }}>
               Komitmen Kami untuk Kualitas & Kepercayaan
@@ -239,7 +239,7 @@ export default function BerandaPage() {
               </p>
             </div>
             <Link href="/kontak" className="btn-primary">
-              Mulai Diskusi →
+              Mulai Diskusi
             </Link>
           </div>
         </div>

@@ -180,7 +180,7 @@ export default async function DetailLayananPage({ params }: { params: Promise<{ 
                   transition: 'background-color 0.2s',
                 }}
               >
-                Minta Penawaran B2B →
+                Minta Penawaran B2B
               </Link>
             </div>
           </div>

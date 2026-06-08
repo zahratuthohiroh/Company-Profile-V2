@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Layanan & Komoditas',
-  description: 'Katalog komoditas pangan B2B dari CV Cahaya Nusantara: petis udang, bawang merah, kacang tanah, dan ebi pilihan berkualitas tinggi asal Cirebon.',
+  description: 'Katalog komoditas pangan B2B dari Ugi Cahaya Mentari: petis udang, bawang merah, kacang tanah, dan ebi pilihan berkualitas tinggi asal Cirebon.',
 };
 
 async function getLayananFromBackend() {
@@ -170,7 +170,7 @@ export default async function LayananPage() {
                     <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${item.overlayColor} 0%, rgba(0,0,0,0.30) 100%)` }} />
                     <div style={{ position: 'absolute', inset: 0, padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                       <h2 style={{ fontSize: '1.375rem', color: 'white', marginBottom: '4px' }}>{item.name}</h2>
-                      <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.80)' }}>📍 {item.origin} | Grade: {item.grade}</span>
+                      <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.80)' }}>Asal: {item.origin} | Grade: {item.grade}</span>
                     </div>
                   </div>
 
@@ -181,16 +181,29 @@ export default async function LayananPage() {
                     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--space-4)' }}>
                       {item.features.map((f: string) => (
                         <li key={f} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--color-espresso-mid)' }}>
-                          <span style={{ color: item.color, fontWeight: 700 }}>✓</span> {f}
+                          <span style={{ color: item.color, fontWeight: 700 }}>•</span> {f}
                         </li>
                       ))}
                     </ul>
 
                     <Link
                       href={`/layanan/${item.dbId}`}
-                      style={{ display: 'inline-flex', alignItems: 'center', fontSize: '0.875rem', fontWeight: 600, color: item.color, textDecoration: 'none' }}
+                      style={{ 
+                        display: 'inline-flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        fontSize: '0.875rem', 
+                        fontWeight: 600, 
+                        color: 'white', 
+                        backgroundColor: item.color,
+                        textDecoration: 'none',
+                        padding: '10px 18px',
+                        borderRadius: '6px',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        marginTop: 'var(--space-2)'
+                      }}
                     >
-                      Lihat Detail Produk →
+                      Lihat Detail Produk
                     </Link>
                   </div>
                 </article>

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Tentang Kami',
-  description: 'Sejarah, visi, dan misi Ugi Cahaya Perkasa sebagai distributor B2B komoditas pangan tradisional Cirebon sejak 1998.',
+  description: 'Sejarah, visi, dan misi Ugi Cahaya Mentari sebagai distributor B2B komoditas pangan tradisional Cirebon sejak 1998.',
 };
 
 const milestones = [
@@ -60,7 +60,7 @@ export default function TentangPage() {
         <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
           <span className="section-label-light">Profil Perusahaan</span>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)', maxWidth: '640px' }}>
-            Tentang Ugi Cahaya Perkasa
+            Tentang Ugi Cahaya Mentari
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.0625rem', maxWidth: '560px', lineHeight: 1.8 }}>
             Lebih dari dua dekade menjadi jembatan antara tradisi pangan lokal Cirebon dengan kebutuhan industri B2B modern di seluruh Jawa Barat.
@@ -143,7 +143,7 @@ export default function TentangPage() {
                 Perjalanan kami dimulai pada 1998, ketika Bapak H. Suryana mendirikan usaha distribusi kecil di kawasan Pasar Pagi Cirebon. Dengan kejujuran dan ketekunan, kami perlahan membangun kepercayaan para produsen lokal dan pelaku industri kuliner.
               </p>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, fontSize: '0.9375rem', marginBottom: 'var(--space-5)' }}>
-                Hari ini, Ugi Cahaya Perkasa telah berkembang menjadi distributor B2B terpercaya dengan jaringan lebih dari 200 mitra aktif, melayani restoran, pabrik bumbu, hotel, dan retail modern di seluruh Jawa Barat.
+                Hari ini, Ugi Cahaya Mentari telah berkembang menjadi distributor B2B terpercaya dengan jaringan lebih dari 200 mitra aktif, melayani restoran, pabrik bumbu, hotel, dan retail modern di seluruh Jawa Barat.
               </p>
               {/* Highlights list */}
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -154,7 +154,7 @@ export default function TentangPage() {
                   'Tim QC berlapis untuk setiap komoditas',
                 ].map((item, i) => (
                   <li key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.9rem', color: 'var(--color-espresso-mid)' }}>
-                    <span style={{ color: 'var(--color-forest)', fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span style={{ color: 'var(--color-forest)', fontWeight: 700, flexShrink: 0 }}>•</span>
                     {item}
                   </li>
                 ))}
@@ -380,14 +380,14 @@ export default function TentangPage() {
                 Jadilah Bagian dari Jaringan Distribusi Kami
               </h2>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, marginBottom: 'var(--space-5)', fontSize: '0.9375rem' }}>
-                Kami membuka peluang kemitraan untuk pemasok komoditas, distributor sub-regional, dan mitra logistik yang ingin berkembang bersama Ugi Cahaya Perkasa.
+                Kami membuka peluang kemitraan untuk pemasok komoditas, distributor sub-regional, dan mitra logistik yang ingin berkembang bersama Ugi Cahaya Mentari.
               </p>
               <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
                 <Link href="/kontak" className="btn-primary">
                   Hubungi Kami Sekarang
                 </Link>
                 <Link href="/layanan" className="btn-forest">
-                  Lihat Komoditas →
+                  Lihat Komoditas
                 </Link>
               </div>
             </div>

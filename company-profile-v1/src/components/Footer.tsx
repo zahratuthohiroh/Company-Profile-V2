@@ -16,7 +16,7 @@ export default function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
 
-  if (pathname.startsWith('/admin')) return null;
+  if (pathname.startsWith('/admin') || pathname === '/login') return null;
 
   return (
     <footer
@@ -40,26 +40,12 @@ export default function Footer() {
         >
           {/* Brand Column */}
           <div style={{ gridColumn: 'span 1' }}>
-            <div style={{ marginBottom: 'var(--space-3)' }}>
-              <span style={{
-                display: 'block',
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.375rem',
-                fontWeight: 700,
-                color: 'white',
-                marginBottom: '4px',
-              }}>
-                Ugi Cahaya Perkasa
-              </span>
-              <span style={{
-                fontSize: '0.7rem',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'var(--color-gold)',
-                fontWeight: 600,
-              }}>
-                Distributor Pangan Cirebon
-              </span>
+            <div style={{ marginBottom: 'var(--space-4)' }}>
+              <img 
+                src="/logo.png" 
+                alt="Ugi Cahaya Mentari" 
+                style={{ height: '56px', width: 'auto', objectFit: 'contain' }} 
+              />
             </div>
             <p style={{ fontSize: '0.875rem', lineHeight: 1.75, maxWidth: '260px' }}>
               Menjembatani tradisi kuliner Nusantara dengan kebutuhan industri B2B secara profesional dan terpercaya sejak 1998.
@@ -67,7 +53,7 @@ export default function Footer() {
             {/* Social Links */}
             <div style={{ marginTop: 'var(--space-3)', display: 'flex', gap: '10px' }}>
               <a
-                href="https://wa.me/6281320516633"
+                href="https://wa.me/6281320516633?text=Halo%2C%20saya%20tertarik%20untuk%20mengetahui%20lebih%20lanjut%20mengenai%20produk%20anda."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-link"
@@ -99,7 +85,7 @@ export default function Footer() {
                     href={link.href}
                     className="footer-nav-link"
                   >
-                    → {link.label}
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -136,7 +122,7 @@ export default function Footer() {
               </div>
               <div>
                 <span style={{ color: 'var(--color-gold)', fontWeight: 600, display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '2px' }}>WhatsApp</span>
-                <a href="https://wa.me/6281320516633" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }}>+62 813-2051-6633</a>
+                <a href="https://wa.me/6281320516633?text=Halo%2C%20saya%20tertarik%20untuk%20mengetahui%20lebih%20lanjut%20mengenai%20produk%20anda." target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }}>+62 813-2051-6633</a>
               </div>
             </div>
           </div>
@@ -152,7 +138,7 @@ export default function Footer() {
           gap: 'var(--space-2)',
         }}>
           <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.4)' }}>
-            © {year} Ugi Cahaya Perkasa. Hak cipta dilindungi undang-undang.
+            © {year} Ugi Cahaya Mentari. Hak cipta dilindungi undang-undang.
           </p>
           <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.4)' }}>
             Distributor B2B Pangan Tradisional Cirebon
