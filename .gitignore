@@ -8,3 +8,4 @@ company-profile-backend/vendor/
 company-profile-backend/.env
 company-profile-backend/storage/*.key
 /personal/
+/final_project_no_git.zip
