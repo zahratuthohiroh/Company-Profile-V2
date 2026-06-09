@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Layanan & Komoditas',
   description: 'Katalog komoditas pangan B2B dari Ugi Cahaya Mentari: petis udang, bawang merah, kacang tanah, dan ebi pilihan berkualitas tinggi asal Cirebon.',
@@ -11,7 +12,7 @@ async function getLayananFromBackend() {
   try {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
     const res = await fetch(`${API_BASE}/api/layanan`, {
-      next: { revalidate: 3600 } // Cache hasil API selama 1 jam untuk performa optimal
+      next: { revalidate: 10 } // Cache selama 10 detik untuk keseimbangan performa dan real-time
     });
 
     if (!res.ok) return [];
