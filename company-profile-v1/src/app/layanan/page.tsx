@@ -12,7 +12,7 @@ async function getLayananFromBackend() {
   try {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
     const res = await fetch(`${API_BASE}/api/layanan`, {
-      next: { revalidate: 10 } // Cache selama 10 detik untuk keseimbangan performa dan real-time
+      cache: 'no-store' // Wajib 'no-store' agar Vercel Data Cache tidak menyimpan data persisten
     });
 
     if (!res.ok) return [];
