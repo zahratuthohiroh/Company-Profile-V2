@@ -7,19 +7,12 @@ export const metadata: Metadata = {
   description: 'Sejarah, visi, dan misi Ugi Cahaya Mentari sebagai distributor B2B komoditas pangan tradisional Cirebon sejak 1998.',
 };
 
-const milestones = [
-  { year: '1998', title: 'Berdiri di Cirebon', desc: 'Didirikan oleh Bapak H. Suryana dengan modal awal distribusi petis udang ke pasar lokal Cirebon.' },
-  { year: '2005', title: 'Ekspansi Komoditas', desc: 'Menambah lini distribusi bawang merah dan kacang tanah, memperluas jaringan ke seluruh Jawa Barat.' },
-  { year: '2012', title: 'Sertifikasi & Standarisasi', desc: 'Memperoleh sertifikasi halal MUI dan menerapkan standar BPOM untuk seluruh rantai distribusi.' },
-  { year: '2018', title: 'Platform Digital', desc: 'Meluncurkan sistem pemesanan digital dan memperluas jaringan mitra B2B ke wilayah Jabodetabek.' },
-  { year: '2024', title: 'Modernisasi Operasional', desc: 'Implementasi sistem manajemen rantai pasok digital dan gudang berpendingin untuk menjaga kualitas komoditas.' },
-];
 
 const values = [
-  { image: '/illus-integritas.png', accentColor: '#2D6A4F', title: 'Integritas',      desc: 'Kejujuran dalam setiap transaksi dan transparansi penuh dalam rantai distribusi.' },
-  { image: '/illus-kualitas.png',   accentColor: '#C89A2E', title: 'Kualitas',        desc: 'Standar seleksi ketat untuk setiap komoditas yang kami distribusikan.' },
-  { image: '/illus-kemitraan.png',  accentColor: '#1A5C5C', title: 'Kemitraan',       desc: 'Membangun hubungan jangka panjang yang saling menguntungkan dengan semua pemangku kepentingan.' },
-  { image: '/illus-keberlanjutan.png', accentColor: '#5A7A2E', title: 'Keberlanjutan', desc: 'Mendukung petani lokal dan praktik pertanian yang berkelanjutan.' },
+  { image: '/illus-integritas.png', accentColor: '#2D6A4F', title: 'Integritas',      desc: 'Kami menjunjung tinggi kejujuran di setiap transaksi dan menjaga transparansi penuh di seluruh rantai distribusi kami.' },
+  { image: '/illus-kualitas.png',   accentColor: '#C89A2E', title: 'Kualitas',        desc: 'Setiap komoditas yang sampai ke tangan Anda telah melewati proses seleksi yang sangat ketat sesuai standar kami.' },
+  { image: '/illus-kemitraan.png',  accentColor: '#1A5C5C', title: 'Kemitraan',       desc: 'Kami tidak sekadar berbisnis, tetapi membangun hubungan jangka panjang yang saling menguntungkan dengan semua pihak.' },
+  { image: '/illus-keberlanjutan.png', accentColor: '#5A7A2E', title: 'Keberlanjutan', desc: 'Kami berupaya mendukung kesejahteraan petani lokal serta mendorong praktik pertanian yang ramah lingkungan demi masa depan.' },
 ];
 
 const stats = [
@@ -68,7 +61,7 @@ export default function TentangPage() {
             Tentang Ugi Cahaya Mentari
           </h1>
           <p className="animate-fade-in-up-delay-2" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.0625rem', maxWidth: '560px', lineHeight: 1.8 }}>
-            Berpengalaman lebih dari 20 tahun memasok komoditas pangan Cirebon untuk memenuhi skala dan standar industri modern.
+            Kami hadir sebagai distributor komoditas pangan tradisional yang bisa Anda percaya. Mulai dari kebutuhan industri berskala besar hingga dapur rumah tangga di seluruh Nusantara, kami siap menjadi jembatan penghubung antara hasil bumi produsen lokal dengan pasar yang lebih luas.
           </p>
 
           {/* Hero Stats Strip */}
@@ -144,24 +137,24 @@ export default function TentangPage() {
 
             {/* Text Side */}
             <div style={{ paddingTop: 'var(--space-4)' }}>
-              <span className="section-label">Sejarah Kami</span>
+              <span className="section-label">Siapa Kami</span>
               <div className="divider-terracotta" />
               <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', marginBottom: 'var(--space-3)' }}>
-                Berawal dari Pasar Tradisional Cirebon
+                Mitra Distribusi Pangan yang Bisa Anda Andalkan
               </h2>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, marginBottom: 'var(--space-3)', fontSize: '0.9375rem' }}>
-                Ugi Cahaya Mentari bermula pada tahun 1998 sebagai usaha distribusi di Pasar Pagi Cirebon yang didirikan oleh Bapak H. Suryana. Seiring waktu, kami terus menjaga komitmen mutu hingga dipercaya oleh berbagai pelaku industri.
+                Ugi Cahaya Mentari adalah perusahaan distribusi komoditas pangan tradisional yang lahir dan berkembang di jantung kota Cirebon, Jawa Barat. Spesialisasi kami berfokus pada penyediaan bahan pangan lokal pilihan, seperti petis udang, bawang merah, kacang tanah, dan ebi.
               </p>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, fontSize: '0.9375rem', marginBottom: 'var(--space-5)' }}>
-                Hari ini, Ugi Cahaya Mentari telah berkembang menjadi distributor B2B terpercaya dengan jaringan lebih dari 200 mitra aktif, melayani restoran, pabrik bumbu, hotel, dan retail modern di seluruh Jawa Barat.
+                Berkat jalinan relasi yang erat dengan para petani dan produsen lokal, kami mampu menjamin ketersediaan komoditas dengan kualitas yang selalu terjaga serta kepastian pasokan yang aman sepanjang tahun, baik untuk industri kuliner, bisnis retail, maupun konsumsi rumah tangga harian.
               </p>
               {/* Highlights list */}
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {[
-                  'Tersertifikasi Halal MUI & standar BPOM',
-                  'Jaringan distribusi 12 Kab/Kota di Jawa Barat',
-                  'Armada pengiriman berpendingin modern',
-                  'Tim QC berlapis untuk setiap komoditas',
+                  'Sudah tersertifikasi Halal MUI dan memenuhi standar kelayakan BPOM',
+                  'Melayani beragam kebutuhan dari skala B2B (grosir) hingga B2C (retail)',
+                  'Jangkauan distribusi luas ke seluruh wilayah Jawa Barat dan sekitarnya',
+                  'Didukung armada pengiriman khusus dengan standar penanganan produk yang ketat',
                 ].map((item, i) => (
                   <li key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.9rem', color: 'var(--color-espresso-mid)' }}>
                     <span style={{ color: 'var(--color-forest)', fontWeight: 700, flexShrink: 0 }}>•</span>
@@ -169,71 +162,6 @@ export default function TentangPage() {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======== TIMELINE ======== */}
-      <section className="section-pad" style={{ backgroundColor: 'var(--color-cream-dark)' }}>
-        <div className="container-site">
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-            <span className="section-label">Milestone</span>
-            <div className="divider-terracotta" style={{ margin: '0 auto var(--space-3)' }} />
-            <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>Tonggak Sejarah Perusahaan</h2>
-          </div>
-
-          <div style={{ position: 'relative', maxWidth: '760px', margin: '0 auto' }}>
-            {/* Timeline vertical line */}
-            <div style={{
-              position: 'absolute',
-              left: '88px',
-              top: 0,
-              bottom: 0,
-              width: '2px',
-              background: 'linear-gradient(to bottom, transparent, var(--color-forest) 10%, var(--color-forest) 90%, transparent)',
-            }} aria-hidden="true" />
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {milestones.map((m, i) => (
-                <div key={i} style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'flex-start' }}>
-                  {/* Year column */}
-                  <div style={{ minWidth: '72px', textAlign: 'right', position: 'relative', paddingTop: '3px' }}>
-                    <span style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '0.9375rem',
-                      fontWeight: 700,
-                      color: 'var(--color-forest)',
-                    }}>{m.year}</span>
-                    {/* Dot */}
-                    <div style={{
-                      position: 'absolute',
-                      right: '-25px',
-                      top: '7px',
-                      width: '12px',
-                      height: '12px',
-                      borderRadius: '50%',
-                      backgroundColor: i === milestones.length - 1 ? 'var(--color-forest)' : 'var(--color-terracotta)',
-                      border: '2.5px solid var(--color-cream-dark)',
-                      boxShadow: '0 0 0 3px ' + (i === milestones.length - 1 ? 'rgba(45,106,79,0.2)' : 'rgba(192,98,42,0.2)'),
-                    }} />
-                  </div>
-
-                  {/* Content card */}
-                  <div style={{
-                    flex: 1,
-                    backgroundColor: 'white',
-                    borderRadius: '8px',
-                    padding: 'var(--space-3) var(--space-4)',
-                    boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-                    borderLeft: `3px solid ${i === milestones.length - 1 ? 'var(--color-forest)' : 'var(--color-terracotta)'}`,
-                    marginBottom: 'var(--space-1)',
-                  }}>
-                    <h3 style={{ fontSize: '1rem', marginBottom: '5px', color: 'var(--color-espresso)' }}>{m.title}</h3>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--color-stone)', lineHeight: 1.65, margin: 0 }}>{m.desc}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -280,7 +208,7 @@ export default function TentangPage() {
               }}>Visi</span>
               <div className="divider-gold" />
               <h2 style={{ fontSize: '1.1875rem', color: 'white', lineHeight: 1.65, marginBottom: 'var(--space-3)' }}>
-                Menjadi distributor komoditas pangan tradisional B2B terdepan di Jawa Barat yang dipercaya, berkelanjutan, dan memberdayakan petani lokal.
+                Kami bercita-cita menjadi distributor komoditas pangan tradisional utama yang selalu dipercaya, baik oleh mitra bisnis maupun konsumen akhir di seluruh Indonesia. Semuanya berlandaskan pada komitmen tulus kami terhadap kualitas produk dan keberlanjutan lingkungan.
               </h2>
             </div>
 
@@ -311,10 +239,9 @@ export default function TentangPage() {
               <div className="divider-terracotta" />
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {[
-                  'Menjamin ketersediaan komoditas pangan berkualitas tinggi secara konsisten untuk mitra B2B.',
-                  'Memberdayakan petani dan produsen lokal Cirebon melalui kemitraan yang adil dan transparan.',
-                  'Mengimplementasikan sistem distribusi modern yang efisien dan ramah lingkungan.',
-                  'Membangun ekosistem bisnis pangan yang menguntungkan semua pemangku kepentingan.',
+                  'Secara konsisten menghadirkan komoditas pangan dengan kualitas terbaik, baik untuk kebutuhan mitra B2B maupun para pelanggan retail kami.',
+                  'Turut memberdayakan kesejahteraan para petani dan produsen lokal di Cirebon melalui jalinan kemitraan yang adil dan saling membawa berkah.',
+                  'Menciptakan sebuah ekosistem distribusi pangan yang tak hanya efisien dan transparan, tetapi juga memberikan dampak positif yang nyata bagi masyarakat sekitar.',
                 ].map((m, i) => (
                   <li key={i} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
                     <span style={{
@@ -387,10 +314,10 @@ export default function TentangPage() {
               <span className="section-label">Bergabung Bersama Kami</span>
               <div className="divider-terracotta" />
               <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.125rem)', marginBottom: 'var(--space-3)' }}>
-                Jadilah Bagian dari Jaringan Distribusi Kami
+                Tertarik Menjalin Kemitraan dengan Kami?
               </h2>
               <p style={{ color: 'var(--color-stone)', lineHeight: 1.85, marginBottom: 'var(--space-5)', fontSize: '0.9375rem' }}>
-                Kami membuka peluang kemitraan untuk pemasok komoditas, distributor sub-regional, dan mitra logistik yang ingin berkembang bersama Ugi Cahaya Mentari.
+                Tim kami selalu terbuka dan dengan senang hati siap berdiskusi lebih lanjut mengenai kebutuhan komoditas Anda. Kami hadir untuk mengeksplorasi berbagai skema kemitraan yang pas, serta memberikan penawaran harga grosir terbaik demi mendukung pertumbuhan bisnis Anda bersama Ugi Cahaya Mentari.
               </p>
               <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
                 <Link href="/kontak" className="btn-primary">

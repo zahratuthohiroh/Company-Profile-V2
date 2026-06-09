@@ -11,7 +11,7 @@ const contactCards = [
   {
     label: 'Alamat Kantor',
     lines: ['Jl. Bojong Kaler No. 51 RT 03 RW 12,', 'Cigadung, Cibeunying Kaler'],
-    cta: { label: 'Lihat di Google Maps', href: 'https://maps.google.com/?q=Jl+Bojong+Kaler+No+51+Cigadung+Cibeunying+Kaler', external: true },
+    cta: null,
   },
   {
     label: 'Telepon',

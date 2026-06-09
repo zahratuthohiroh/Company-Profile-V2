@@ -118,9 +118,6 @@ export default function Navbar() {
             );
           })}
 
-          <Link href="/kontak" className="btn-primary" style={{ padding: '10px 24px', fontSize: '0.875rem' }}>
-            Hubungi Kami
-          </Link>
         </nav>
 
         {/* Hamburger (Mobile) */}
@@ -174,9 +171,6 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <Link href="/kontak" className="btn-primary" style={{ marginTop: 'var(--space-3)', textAlign: 'center', justifyContent: 'center' }}>
-            Hubungi Kami
-          </Link>
         </nav>
       </div>
 

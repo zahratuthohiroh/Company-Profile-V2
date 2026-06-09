@@ -28,7 +28,7 @@ const visualAssetsMap: Record<string, any> = {
     image: '/petis-udang.png',
     origin: 'Cirebon, Jawa Barat',
     grade: 'Grade A / Grade B',
-    features: ['Kadar protein tinggi', 'Bebas pengawet buatan', 'Tersertifikasi Halal MUI', 'Kemasan industri 1kg - 25kg'],
+    features: [],
     color: '#2D6A4F',
     overlayColor: 'rgba(18,55,32,0.72)',
     borderColor: 'rgba(45,106,79,0.22)',
@@ -38,7 +38,7 @@ const visualAssetsMap: Record<string, any> = {
     image: '/bawang-merah.png',
     origin: 'Brebes & Cirebon, Jawa Barat',
     grade: 'Super / Medium / Industri',
-    features: ['Sortir manual berlapis', 'Kadar air optimal', 'Tersedia stok konsisten', 'Pengiriman terjadwal'],
+    features: [],
     color: '#1A5C5C',
     overlayColor: 'rgba(14,55,55,0.72)',
     borderColor: 'rgba(26,92,92,0.22)',
@@ -48,7 +48,7 @@ const visualAssetsMap: Record<string, any> = {
     image: '/kacang-tanah.png',
     origin: 'Majalengka & Cirebon',
     grade: 'Kulit / Kupas / Sangrai',
-    features: ['Ukuran seragam & besar', 'Kadar aflatoksin terkontrol', 'Terseria varian kupas & kulit', 'MOQ fleksibel per kuintal'],
+    features: [],
     color: '#5A7A2E',
     overlayColor: 'rgba(40,55,14,0.72)',
     borderColor: 'rgba(90,122,46,0.22)',
@@ -58,7 +58,7 @@ const visualAssetsMap: Record<string, any> = {
     image: '/ebi.png',
     origin: 'Pesisir Cirebon & Indramayu',
     grade: 'Pilihan / Reguler',
-    features: ['Dikeringkan secara alami', 'Aroma kuat & harum', 'Ukuran seragam', 'Kemasan vakum tersedia'],
+    features: [],
     color: '#40916C',
     overlayColor: 'rgba(20,65,50,0.72)',
     borderColor: 'rgba(64,145,108,0.22)',
@@ -66,8 +66,8 @@ const visualAssetsMap: Record<string, any> = {
 };
 
 const services = [
-  { image: '/illus-distribusi.png', accentColor: '#2D6A4F', title: 'Distribusi B2B', desc: 'Layanan distribusi skala besar dengan jadwal pengiriman reguler ke seluruh wilayah Jawa Barat.' },
-  { image: '/illus-industri.png', accentColor: '#1A5C5C', title: 'Kemitraan Industri', desc: 'Program kemitraan khusus untuk pabrik bumbu, produsen makanan, hotel, dan jaringan restoran.' },
+  { image: '/illus-distribusi.png', accentColor: '#2D6A4F', title: 'Distribusi Skala Besar (B2B)', desc: 'Kami siap mendukung kelancaran operasional bisnis Anda melalui pasokan komoditas skala besar dengan kepastian jadwal pengiriman yang selalu dapat diandalkan.' },
+  { image: '/illus-industri.png', accentColor: '#1A5C5C', title: 'Kemitraan Industri & Horeka', desc: 'Program kerja sama strategis yang dirancang khusus untuk produsen makanan, hotel, dan jaringan restoran dengan jaminan kualitas dan penawaran harga grosir terbaik.' },
 ];
 
 export default async function LayananPage() {
@@ -80,7 +80,7 @@ export default async function LayananPage() {
       image: '/petis-udang.png', 
       origin: 'Cirebon, Jawa Barat',
       grade: 'Standard B2B',
-      features: ['Mutu Standar Industri', 'Rantai Pasok Terjamin'],
+      features: [],
       color: '#2D6A4F',
       overlayColor: 'rgba(18,55,32,0.72)',
       borderColor: 'rgba(45,106,79,0.22)',
@@ -136,7 +136,7 @@ export default async function LayananPage() {
         <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
           <span className="section-label-light animate-fade-in-up">Informasi Produk</span>
           <h1 className="animate-fade-in-up-delay-1" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', marginBottom: 'var(--space-3)' }}>
-            Katalog Komoditas & Analisis Pasar
+            Katalog Komoditas Pilihan
           </h1>
         </div>
       </section>
@@ -176,13 +176,12 @@ export default async function LayananPage() {
                     <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${item.overlayColor} 0%, rgba(0,0,0,0.30) 100%)` }} />
                     <div style={{ position: 'absolute', inset: 0, padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                       <h2 style={{ fontSize: '1.375rem', color: 'white', marginBottom: '4px' }}>{item.name}</h2>
-                      <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.80)' }}>Asal: {item.origin} | Grade: {item.grade}</span>
                     </div>
                   </div>
 
                   {/* Body */}
                   <div style={{ padding: 'var(--space-4)' }}>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-stone)', lineHeight: 1.75, marginBottom: 'var(--space-3)', minHeight: '70px' }}>{item.desc}</p>
+                    <p className="line-clamp-4" style={{ fontSize: '0.9rem', color: 'var(--color-stone)', lineHeight: 1.75, marginBottom: 'var(--space-3)', minHeight: '100px' }}>{item.desc}</p>
 
                     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--space-4)' }}>
                       {item.features.map((f: string) => (
@@ -194,19 +193,21 @@ export default async function LayananPage() {
 
                     <Link
                       href={`/layanan/${item.dbId}`}
+                      className="hover:-translate-y-1 hover:shadow-md transition-all duration-200"
                       style={{ 
-                        display: 'inline-flex', 
+                        display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center',
-                        fontSize: '0.875rem', 
+                        width: '100%',
+                        fontSize: '1rem', 
                         fontWeight: 600, 
                         color: 'white', 
                         backgroundColor: item.color,
                         textDecoration: 'none',
-                        padding: '10px 18px',
-                        borderRadius: '6px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                        marginTop: 'var(--space-2)'
+                        padding: '12px 24px',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                        marginTop: 'var(--space-4)',
                       }}
                     >
                       Lihat Detail Produk

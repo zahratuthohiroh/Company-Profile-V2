@@ -93,6 +93,23 @@ export default function AdminDashboard() {
     if (!loading) fetchStats(analyticPeriod);
   }, [analyticPeriod]);
 
+  // Efek untuk mengisi otomatis metrik volume jika data tahunan sudah tersedia
+  useEffect(() => {
+    if (selectedLayananId && inputYear) {
+      const product = products.find(p => p.id === selectedLayananId);
+      if (product && product.histories) {
+        const history = product.histories.find((h: any) => h.year === parseInt(inputYear));
+        if (history) {
+          setInputVolume(history.volume_sold.toString());
+        } else {
+          setInputVolume('');
+        }
+      } else {
+        setInputVolume('');
+      }
+    }
+  }, [selectedLayananId, inputYear, products]);
+
   const handleSubmitProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -123,7 +140,6 @@ export default function AdminDashboard() {
         alert(productId ? 'Data komoditas berhasil diperbarui.' : 'Komoditas baru berhasil ditambahkan.');
         resetProductForm();
         fetchProducts();
-        setActiveMenu('manajemen');
       } else {
         alert('Gagal menyimpan produk. Silakan periksa isian Anda.');
       }
@@ -170,7 +186,6 @@ export default function AdminDashboard() {
         alert('Data riwayat penjualan berhasil disinkronisasi.');
         setInputVolume('');
         fetchProducts();
-        setActiveMenu('manajemen');
       }
     } catch (error) {
       alert('Terjadi kesalahan pada sistem saat menyimpan grafik.');
@@ -350,7 +365,7 @@ export default function AdminDashboard() {
             <div className="animate-in fade-in duration-500 flex-1 flex flex-col p-8">
               <div className="mb-8 pb-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight uppercase">Sistem Kontrol Operasional B2B</h2>
+                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight uppercase">Dashboard Produk</h2>
                   <p className="text-slate-700 font-medium mt-1.5 text-sm">Otorisasi dan kelola data inventaris komoditas publik.</p>
                 </div>
                 <div className="relative w-full md:w-64">
@@ -495,7 +510,7 @@ export default function AdminDashboard() {
               </div>
 
               <div className="flex-1 max-w-3xl">
-                <form onSubmit={handleSubmitProduct} className="space-y-6">
+                <form onSubmit={handleSubmitProduct} className="space-y-6" autoComplete="off">
                   
                   <div>
                     <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Nama Komoditas / Layanan</label>
@@ -505,6 +520,7 @@ export default function AdminDashboard() {
                       onChange={(e) => setNamaLayanan(e.target.value)}
                       placeholder="Contoh: Petis Udang Super Grade A" 
                       required 
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all"
                     />
                   </div>
@@ -517,6 +533,7 @@ export default function AdminDashboard() {
                       placeholder="Jelaskan spesifikasi teknis, standar kualitas, atau informasi penting lainnya..." 
                       required 
                       rows={4}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all resize-none"
                     />
                   </div>
@@ -629,7 +646,7 @@ export default function AdminDashboard() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Tahun Fiskal</label>
+                      <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Tahun</label>
                       <select 
                         value={inputYear} 
                         onChange={(e) => setInputYear(e.target.value)} 
@@ -647,7 +664,7 @@ export default function AdminDashboard() {
                         type="number" 
                         value={inputVolume} 
                         onChange={(e) => setInputVolume(e.target.value)} 
-                        placeholder="Contoh metrik: 150" 
+                        placeholder="Contoh: 150" 
                         required 
                         className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all" 
                       />

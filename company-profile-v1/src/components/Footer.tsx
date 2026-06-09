@@ -11,7 +11,6 @@ const footerLinks = [
   { href: '/kontak',  label: 'Kontak' },
 ];
 
-const commodities = ['Petis Udang', 'Bawang Merah', 'Kacang Tanah', 'Ebi (Udang Kering)'];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -95,19 +94,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Commodities Column */}
-          <div>
-            <h4 style={{ color: 'white', fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 'var(--space-3)' }}>
-              Komoditas Kami
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {commodities.map(c => (
-                <li key={c} style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.65)' }}>
-                  • {c}
-                </li>
-              ))}
-            </ul>
-          </div>
 
           {/* Contact Column */}
           <div>
