@@ -158,7 +158,7 @@ export default async function DetailLayananPage({ params }: { params: Promise<{ 
                       transition: 'all 0.2s',
                     }}
                   >
-                    Minta Penawaran Harga B2B
+                    Kontak Kami Untuk Penawaran Harga
                   </Link>
                 </div>
               </div>

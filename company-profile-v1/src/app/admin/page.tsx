@@ -49,7 +49,7 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/layanan`, { cache: 'no-store' });
+      const res = await fetch(`/api/proxy/layanan`, { cache: 'no-store' });
       const data = await res.json();
       setProducts(data);
     } catch (error) {
