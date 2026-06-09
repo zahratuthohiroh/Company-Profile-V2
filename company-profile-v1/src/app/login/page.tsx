@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import Image from 'next/image';
 
 export default function LoginPage() {
@@ -18,8 +17,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-      const res = await fetch(`${API_BASE}/api/login`, {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -28,8 +26,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        // Simpan token ke cookie (berlaku 1 hari)
-        Cookies.set('admin_token', data.token, { expires: 1, secure: true });
+        // Token sudah diset secara aman (HttpOnly) oleh Next.js API Route
         router.push('/admin');
       } else {
         setError(data.message || 'Login gagal, periksa kredensial Anda.');

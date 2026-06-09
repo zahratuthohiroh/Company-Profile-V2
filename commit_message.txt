@@ -1,6 +1,0 @@
-feat: comprehensive frontend overhaul for SEO, UI, and B2B conversion
-
-- SEO: Added dynamic sitemap.ts, robots.ts, JSON-LD LocalBusiness schema, and OpenGraph images.
-- UI & A11y: Fixed mobile grid layout for product detail page and improved text contrast ratio (WCAG AA).
-- Feature: Integrated global FloatingWhatsApp component with pulse animation for better B2B lead conversion.
-- Copywriting: Refined text across Beranda, Layanan, Tentang, and Kontak to be more professional and human-like.

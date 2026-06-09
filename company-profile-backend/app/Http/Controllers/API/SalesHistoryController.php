@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Routing\Controller;
 use App\Models\SalesHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SalesHistoryController extends Controller
 {
@@ -26,6 +27,8 @@ class SalesHistoryController extends Controller
                 'volume_sold' => $validated['volume_sold']
             ]
         );
+
+        Cache::forget('layanan_all');
 
         return response()->json(['message' => 'Data grafik berhasil diperbarui!', 'data' => $history], 200);
     }

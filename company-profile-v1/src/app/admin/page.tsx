@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), { ssr: false });
@@ -46,6 +45,7 @@ export default function AdminDashboard() {
   const [selectedLayananId, setSelectedLayananId] = useState<number | null>(null);
   const [inputYear, setInputYear] = useState('2026');
   const [inputVolume, setInputVolume] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchProducts = async () => {
     try {
@@ -58,12 +58,8 @@ export default function AdminDashboard() {
   };
 
   const fetchStats = async (period = analyticPeriod) => {
-    const token = Cookies.get('admin_token');
-    if (!token) return;
     try {
-      const res = await fetch(`${API_BASE}/api/analytics/stats?period=${period}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch(`/api/proxy/analytics/stats?period=${period}`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -74,12 +70,8 @@ export default function AdminDashboard() {
   };
 
   const fetchAuditLogs = async () => {
-    const token = Cookies.get('admin_token');
-    if (!token) return;
     try {
-      const res = await fetch(`${API_BASE}/api/audit-logs`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch(`/api/proxy/audit-logs`);
       if (res.ok) {
         const data = await res.json();
         setAuditLogs(data);
@@ -101,8 +93,26 @@ export default function AdminDashboard() {
     if (!loading) fetchStats(analyticPeriod);
   }, [analyticPeriod]);
 
+  // Efek untuk mengisi otomatis metrik volume jika data tahunan sudah tersedia
+  useEffect(() => {
+    if (selectedLayananId && inputYear) {
+      const product = products.find(p => p.id === selectedLayananId);
+      if (product && product.histories) {
+        const history = product.histories.find((h: any) => h.year === parseInt(inputYear));
+        if (history) {
+          setInputVolume(history.volume_sold.toString());
+        } else {
+          setInputVolume('');
+        }
+      } else {
+        setInputVolume('');
+      }
+    }
+  }, [selectedLayananId, inputYear, products]);
+
   const handleSubmitProduct = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     const formData = new FormData();
     formData.append('nama_layanan', namaLayanan);
@@ -114,19 +124,15 @@ export default function AdminDashboard() {
       formData.append('shopee_link', shopeeLink);
     }
 
-    let url = `${API_BASE}/api/layanan`;
+    let url = `/api/proxy/layanan`;
     if (productId) {
-      url = `${API_BASE}/api/layanan/${productId}`;
+      url = `/api/proxy/layanan/${productId}`;
       formData.append('_method', 'PUT');
     }
 
-    const token = Cookies.get('admin_token');
     try {
       const res = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
         body: formData,
       });
 
@@ -134,22 +140,21 @@ export default function AdminDashboard() {
         alert(productId ? 'Data komoditas berhasil diperbarui.' : 'Komoditas baru berhasil ditambahkan.');
         resetProductForm();
         fetchProducts();
-        setActiveMenu('manajemen');
       } else {
         alert('Gagal menyimpan produk. Silakan periksa isian Anda.');
       }
     } catch (error) {
       alert('Terjadi kesalahan pada sistem saat menyimpan data.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDeleteProduct = async (id: number) => {
     if (!confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen?')) return;
-    const token = Cookies.get('admin_token');
     try {
-      const res = await fetch(`${API_BASE}/api/layanan/${id}`, { 
+      const res = await fetch(`/api/proxy/layanan/${id}`, { 
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
         alert('Data berhasil dihapus.');
@@ -164,13 +169,11 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!selectedLayananId) return alert('Silakan pilih produk terlebih dahulu.');
 
-    const token = Cookies.get('admin_token');
     try {
-      const res = await fetch(`${API_BASE}/api/sales-history`, {
+      const res = await fetch(`/api/proxy/sales-history`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           layanan_id: selectedLayananId,
@@ -183,7 +186,6 @@ export default function AdminDashboard() {
         alert('Data riwayat penjualan berhasil disinkronisasi.');
         setInputVolume('');
         fetchProducts();
-        setActiveMenu('manajemen');
       }
     } catch (error) {
       alert('Terjadi kesalahan pada sistem saat menyimpan grafik.');
@@ -210,18 +212,11 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    const token = Cookies.get('admin_token');
-    if (token) {
-      try {
-        await fetch(`${API_BASE}/api/logout`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (e) {
+      console.error(e);
     }
-    Cookies.remove('admin_token');
     router.push('/login');
   };
 
@@ -258,8 +253,8 @@ export default function AdminDashboard() {
             <div className="w-8 h-8 rounded bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">A</div>
           ) : (
             <>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Admin Panel</h1>
-              <p className="text-xs font-semibold text-indigo-500 mt-1 uppercase tracking-widest">Ugi Cahaya Mentari</p>
+              <h1 className="text-2xl font-black tracking-tight text-slate-900 uppercase">Panel Kontrol</h1>
+              <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-widest">UGI CAHAYA MENTARI</p>
             </>
           )}
         </div>
@@ -273,11 +268,11 @@ export default function AdminDashboard() {
                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 border border-transparent'
             }`}
           >
-            <div className="flex items-center gap-3">
-              <svg className={`w-5 h-5 ${activeMenu === 'manajemen' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'}`}>
+              <svg className={`w-5 h-5 flex-shrink-0 ${activeMenu === 'manajemen' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
               </svg>
-              Manajemen Produk
+              {!isSidebarCollapsed && "Katalog Komoditas"}
             </div>
           </button>
           
@@ -289,11 +284,11 @@ export default function AdminDashboard() {
                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 border border-transparent'
             }`}
           >
-            <div className="flex items-center gap-3">
-              <svg className={`w-5 h-5 ${activeMenu === 'input' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'}`}>
+              <svg className={`w-5 h-5 flex-shrink-0 ${activeMenu === 'input' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
-              Registrasi Produk
+              {!isSidebarCollapsed && "Registrasi Entri Baru"}
             </div>
           </button>
           
@@ -305,11 +300,11 @@ export default function AdminDashboard() {
                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 border border-transparent'
             }`}
           >
-            <div className="flex items-center gap-3">
-              <svg className={`w-5 h-5 ${activeMenu === 'grafik' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'}`}>
+              <svg className={`w-5 h-5 flex-shrink-0 ${activeMenu === 'grafik' ? 'text-indigo-600' : 'text-slate-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
               </svg>
-              Sinkronisasi Grafik
+              {!isSidebarCollapsed && "Sinkronisasi Grafik"}
             </div>
           </button>
           <button 
@@ -363,15 +358,15 @@ export default function AdminDashboard() {
 
       {/* Area Konten Utama */}
       <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
-        <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+        <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-md shadow-sm border border-slate-300 overflow-hidden flex flex-col">
           
           {/* Konten: Manajemen Tabel Produk */}
           {activeMenu === 'manajemen' && (
             <div className="animate-in fade-in duration-500 flex-1 flex flex-col p-8">
               <div className="mb-8 pb-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Manajemen Katalog Produk</h2>
-                  <p className="text-slate-500 mt-1.5 text-sm">Kelola daftar komoditas yang akan ditampilkan pada halaman publik pelanggan.</p>
+                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight uppercase">Dashboard Produk</h2>
+                  <p className="text-slate-700 font-medium mt-1.5 text-sm">Otorisasi dan kelola data inventaris komoditas publik.</p>
                 </div>
                 <div className="relative w-full md:w-64">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -410,6 +405,7 @@ export default function AdminDashboard() {
                                 alt={item.nama_layanan} 
                                 width={64}
                                 height={48}
+                                unoptimized={true}
                                 className="h-12 w-16 object-cover rounded-md shadow-sm border border-slate-200"
                               />
                             ) : (
@@ -514,7 +510,7 @@ export default function AdminDashboard() {
               </div>
 
               <div className="flex-1 max-w-3xl">
-                <form onSubmit={handleSubmitProduct} className="space-y-6">
+                <form onSubmit={handleSubmitProduct} className="space-y-6" autoComplete="off">
                   
                   <div>
                     <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Nama Komoditas / Layanan</label>
@@ -524,6 +520,7 @@ export default function AdminDashboard() {
                       onChange={(e) => setNamaLayanan(e.target.value)}
                       placeholder="Contoh: Petis Udang Super Grade A" 
                       required 
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all"
                     />
                   </div>
@@ -536,6 +533,7 @@ export default function AdminDashboard() {
                       placeholder="Jelaskan spesifikasi teknis, standar kualitas, atau informasi penting lainnya..." 
                       required 
                       rows={4}
+                      autoComplete="off"
                       className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all resize-none"
                     />
                   </div>
@@ -547,9 +545,9 @@ export default function AdminDashboard() {
                         <svg className="mx-auto h-10 w-10 text-slate-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
                         </svg>
-                        <div className="mt-4 flex text-sm leading-6 text-slate-600 justify-center">
-                          <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                            <span>Pilih file gambar</span>
+                        <div className="mt-4 flex text-sm leading-6 text-slate-700 justify-center">
+                          <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-600 uppercase tracking-wide text-xs px-4 py-2 border border-slate-300 hover:bg-slate-50 transition-colors">
+                            <span>Unggah Dokumen Visual</span>
                             <input 
                               type="file" 
                               ref={fileInputRef} 
@@ -561,9 +559,15 @@ export default function AdminDashboard() {
                           </label>
                         </div>
                         <p className="text-xs leading-5 text-slate-500 mt-1">PNG, JPG, WEBP maks. 2MB</p>
+                        {gambarFile && (
+                          <div className="mt-3 flex items-center gap-2 text-sm font-medium text-indigo-700 bg-indigo-50 py-1.5 px-3 rounded-md border border-indigo-100 w-fit mx-auto">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                            {gambarFile.name}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    {productId && <p className="text-xs text-amber-600 mt-2 font-medium flex items-center gap-1"><svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Abaikan bagian ini jika Anda tidak ingin mengganti gambar produk yang sudah ada.</p>}
+                    {productId && <p className="text-xs text-amber-600 mt-2 font-bold flex items-center gap-1 uppercase tracking-wide"><svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>PENTING: Kosongkan area ini jika tidak ada pembaruan dokumen visual.</p>}
                   </div>
 
                   <div>
@@ -596,12 +600,21 @@ export default function AdminDashboard() {
                         Batalkan
                       </button>
                     )}
-                    <button 
-                      type="submit" 
-                      className="rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
-                    >
-                      {productId ? 'Simpan Pembaruan' : 'Registrasi Komoditas'}
-                    </button>
+                      <button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className={`rounded-md px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex items-center justify-center gap-2 ${isSubmitting ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500'}`}
+                      >
+                        {isSubmitting && (
+                          <svg className="animate-spin -ml-1 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        )}
+                        {isSubmitting 
+                          ? (productId ? 'MENGOTORISASI PEMBARUAN...' : 'MENGEKSEKUSI REGISTRASI...') 
+                          : (productId ? 'OTORISASI PEMBARUAN' : 'EKSEKUSI REGISTRASI')}
+                      </button>
                   </div>
                 </form>
               </div>
@@ -633,7 +646,7 @@ export default function AdminDashboard() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Tahun Fiskal</label>
+                      <label className="block text-sm font-semibold leading-6 text-slate-900 mb-2">Tahun</label>
                       <select 
                         value={inputYear} 
                         onChange={(e) => setInputYear(e.target.value)} 
@@ -651,7 +664,7 @@ export default function AdminDashboard() {
                         type="number" 
                         value={inputVolume} 
                         onChange={(e) => setInputVolume(e.target.value)} 
-                        placeholder="Contoh metrik: 150" 
+                        placeholder="Contoh: 150" 
                         required 
                         className="block w-full rounded-md border-0 py-2.5 px-3.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all" 
                       />

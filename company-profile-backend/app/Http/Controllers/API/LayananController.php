@@ -14,7 +14,7 @@ class LayananController extends Controller
     public function index()
     {
         $layanans = Cache::remember('layanan_all', 3600, function () {
-            return Layanan::all();
+            return Layanan::with('histories')->get();
         });
         return response()->json($layanans);
     }
