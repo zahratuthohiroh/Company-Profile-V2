@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     // Tunda kemunculan sedikit agar tidak bentrok dengan initial render/animasi lainnya
@@ -13,7 +15,7 @@ export default function FloatingWhatsApp() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isVisible) return null;
+  if (!isVisible || pathname.startsWith('/admin') || pathname === '/login') return null;
 
   return (
     <a

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import Image from 'next/image';
 import ShopeeButton from '@/components/ShopeeButton';
+import ProductSalesChart from '@/components/ProductSalesChart';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
 
@@ -53,140 +54,123 @@ export default async function DetailLayananPage({ params }: { params: Promise<{ 
   return (
     <>
       <AnalyticsTracker type="product_view" layanan_id={layanan.id} />
-      {/* Hero Banner */}
-      <section
-        style={{
-          minHeight: '420px',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'flex-end',
-          overflow: 'hidden',
-        }}
-      >
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.35 }}>
-          <Image
-            src={imageUrl}
-            alt={layanan.nama_layanan}
-            fill
-            quality={85}
-            priority
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-          />
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to top, rgba(14,40,24,0.95) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
-          }}
-        />
-        <div className="container-site" style={{ position: 'relative', zIndex: 1, paddingBottom: 'var(--space-10)', paddingTop: '120px' }}>
-          <Link href="/layanan" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
+      <section style={{ backgroundColor: 'var(--color-cream)', minHeight: '100vh', paddingTop: '120px', paddingBottom: 'var(--space-12)' }}>
+        <div className="container-site">
+          <Link href="/layanan" style={{ color: 'var(--color-forest)', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '24px' }}>
             ← Kembali ke Katalog
           </Link>
-          <h1
-            style={{
-              fontSize: 'clamp(2rem, 5vw, 3.25rem)',
-              color: 'white',
-              marginBottom: '12px',
-              fontFamily: 'var(--font-serif)',
-              lineHeight: 1.15,
-            }}
-          >
-            {layanan.nama_layanan}
-          </h1>
-        </div>
-      </section>
 
-      {/* Konten Utama */}
-      <section className="section-pad" style={{ backgroundColor: 'var(--color-cream)' }}>
-        <div className="container-site">
           <div
             className="detail-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: '2fr 1fr',
+              gridTemplateColumns: '1fr 1.2fr',
               gap: 'var(--space-8)',
               alignItems: 'start',
+              marginBottom: 'var(--space-10)',
             }}
           >
-            {/* Kiri: Deskripsi */}
-            <div>
+            {/* Kiri: Gambar Produk */}
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+              <Image
+                src={imageUrl}
+                alt={layanan.nama_layanan}
+                fill
+                quality={90}
+                priority
+                unoptimized={true}
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
+              />
+            </div>
+
+            {/* Kanan: Deskripsi & CTA */}
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <h1
+                style={{
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  color: 'var(--color-espresso)',
+                  marginBottom: '16px',
+                  fontFamily: 'var(--font-serif)',
+                  lineHeight: 1.15,
+                }}
+              >
+                {layanan.nama_layanan}
+              </h1>
+
               <span className="section-label" style={{ marginBottom: 'var(--space-3)', display: 'block' }}>
                 Deskripsi Komoditas
               </span>
+              
               <p
                 style={{
                   fontSize: '1.05rem',
                   color: 'var(--color-stone)',
                   lineHeight: 1.85,
                   whiteSpace: 'pre-line',
+                  marginBottom: 'var(--space-6)',
+                  flex: 1,
                 }}
               >
                 {layanan.deskripsi}
               </p>
-            </div>
 
-            {/* Kanan: Kartu CTA */}
-            <div
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '16px',
-                padding: 'var(--space-6)',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
-                border: '1px solid rgba(45,106,79,0.1)',
-                position: 'sticky',
-                top: '100px',
-              }}
-            >
-              <p
+              {/* Box CTA */}
+              <div
                 style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  color: 'var(--color-forest)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '1px',
-                  marginBottom: '8px',
+                  backgroundColor: 'white',
+                  borderRadius: '16px',
+                  padding: 'var(--space-6)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(45,106,79,0.1)',
                 }}
               >
-                Tersedia di Shopee
-              </p>
-              <p style={{ fontSize: '0.9rem', color: 'var(--color-stone)', lineHeight: 1.65, marginBottom: 'var(--space-4)' }}>
-                {hasShopeeLink
-                  ? 'Klik tombol di bawah untuk langsung menuju halaman resmi produk kami di Shopee.'
-                  : 'Produk ini belum tersedia di Shopee. Hubungi kami secara langsung untuk pemesanan B2B.'}
-              </p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-forest)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
+                  Ketersediaan Pasar
+                </p>
+                <p style={{ fontSize: '0.9rem', color: 'var(--color-stone)', lineHeight: 1.65, marginBottom: 'var(--space-4)' }}>
+                  {hasShopeeLink
+                    ? 'Anda dapat membeli produk eceran/sample via Shopee, atau hubungi kami untuk kerja sama pasokan skala B2B (Tonase).'
+                    : 'Produk komoditas skala besar ini tidak tersedia di e-commerce. Silakan hubungi kami untuk negosiasi kuota dan pengiriman B2B.'}
+                </p>
 
-              {/* Tombol Shopee — Dinamis */}
-              <ShopeeButton 
-                href={layanan.shopee_link!} 
-                hasShopeeLink={hasShopeeLink} 
-                layananId={layanan.id} 
-              />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <ShopeeButton 
+                    href={layanan.shopee_link!} 
+                    hasShopeeLink={hasShopeeLink} 
+                    layananId={layanan.id} 
+                  />
 
-              <Link
-                href="/kontak"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  width: '100%',
-                  padding: '12px 20px',
-                  borderRadius: '10px',
-                  fontWeight: 600,
-                  fontSize: '0.95rem',
-                  textDecoration: 'none',
-                  border: '1px solid var(--color-forest)',
-                  color: 'var(--color-forest)',
-                  backgroundColor: 'transparent',
-                  transition: 'background-color 0.2s',
-                }}
-              >
-                Minta Penawaran B2B
-              </Link>
+                  <Link
+                    href="/kontak"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      padding: '14px 20px',
+                      borderRadius: '10px',
+                      fontWeight: 600,
+                      fontSize: '0.95rem',
+                      textDecoration: 'none',
+                      border: '2px solid var(--color-forest)',
+                      color: 'var(--color-forest)',
+                      backgroundColor: 'transparent',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    Minta Penawaran Harga B2B
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Bawah: Grafik Penjualan */}
+          {layanan.histories && layanan.histories.length > 0 && (
+            <div style={{ marginTop: 'var(--space-8)', paddingTop: 'var(--space-8)', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+              <ProductSalesChart histories={layanan.histories} />
+            </div>
+          )}
         </div>
       </section>
 

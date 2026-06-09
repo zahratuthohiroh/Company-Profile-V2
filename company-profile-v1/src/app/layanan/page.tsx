@@ -170,7 +170,9 @@ export default async function LayananPage() {
                 <article key={item.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${item.borderColor}` }}>
                   {/* Image Header */}
                   <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                    <div style={{ position: 'absolute', inset: 0 }}>
+                      <Image src={item.image} alt={item.name} fill unoptimized={true} style={{ objectFit: 'cover', objectPosition: 'center' }} />
+                    </div>
                     <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${item.overlayColor} 0%, rgba(0,0,0,0.30) 100%)` }} />
                     <div style={{ position: 'absolute', inset: 0, padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                       <h2 style={{ fontSize: '1.375rem', color: 'white', marginBottom: '4px' }}>{item.name}</h2>
