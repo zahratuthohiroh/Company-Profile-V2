@@ -120,7 +120,7 @@ export default function BerandaPage() {
                 maxWidth: '580px',
               }}
             >
-              Ugi Cahaya Mentari adalah mitra distribusi B2B terpercaya untuk komoditas pangan tradisional pilihan — petis udang, bawang merah, kacang tanah, dan ebi — langsung dari sumber terbaik Cirebon.
+              Ugi Cahaya Mentari adalah mitra distribusi B2B terpercaya untuk komoditas pangan tradisional pilihan dari sumber terbaik Cirebon.
             </p>
 
             <div
